@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+div#all {
+    width: 600px;
+    height: 100%;
+    margin-left: 200px; /* move away from #logo */
+    margin-top: 20px;
+}
+
+div#logo {
+    width: 200px;
+    height: 150px;
+    background: transparent url(cssimg/admin.png) no-repeat scroll top left;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+ul#tabs {
+    float: left;
+    border-bottom: 3px solid black;
+    width: 100%;
+    margin: 0;
+}
+
+ul#tabs li {
+    list-style: none;
+    float: left;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 1px 0 1px;
+    background-color: lightblue;
+    margin: 0 5px;
+    padding: 2px 8px;
+}
+
+ul#tabs li.selected {
+    background-color: pink;
+}
+
+div#content {
+    float: left;
+    clear: left;
+    width: 100%;
+}
+
+div#text {
+    /* stuff after the h2 */
+    margin-left: 10px;
+}
+
+h1 { text-align: center; }
+h2 { text-align: center; }
+
+/*
+label {
+    float: left;
+    display: block;
+    margin-right: 5px;
+}
+*/
+
+/* For the little "this is required" text in a form. */
+.required {
+    color: red;
+    font-size: 90%;
+}
+
+/* A neat little info box */
+.info {
+    width: 350px;
+    text-align: center;
+    border: 1px solid black;
+    background-color: #FFFFCC;
+    padding: 5px;
+    margin: 10px 25%;
+}
+
+

@@ -1,0 +1,111 @@
+mysql> show tables;
++-----------------+
+| Tables_in_vmars |
++-----------------+
+| appearance      | 
+| cast            | 
+| episode         | 
+| quote           | 
+| ref             | 
+| transcript      | 
+| website         | 
++-----------------+
+7 rows in set (0.03 sec)
+
+mysql> describe appearance;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment | 
+| season    | int(11)      | NO   |     | NULL    |                | 
+| ep_num    | int(11)      | NO   |     | NULL    |                | 
+| name      | text         | NO   |     | NULL    |                | 
+| pseudonym | text         | YES  |     | NULL    |                | 
+| stripname | varchar(100) | NO   |     | NULL    |                | 
++-----------+--------------+------+-----+---------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> describe cast;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| actor       | varchar(200) | YES  |     | NULL    |       |
+| imdb_id     | int(11)      | YES  |     | NULL    |       |
+| name        | tinytext     | NO   | PRI | NULL    |       |
+| pseudonym   | tinytext     | YES  |     | NULL    |       |
+| stripname   | varchar(200) | NO   |     | NULL    |       |
+| description | mediumtext   | YES  |     | NULL    |       |
+| sortkey     | int(11)      | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+7 rows in set (0.03 sec)
+
+mysql> describe episode;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| title         | varchar(100) | NO   |     | NULL    |       | 
+| season        | int(11)      | NO   |     | NULL    |       | 
+| ep_num        | int(11)      | NO   |     | NULL    |       | 
+| title_meaning | text         | YES  |     | NULL    |       | 
++---------------+--------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> describe quote;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| id         | int(11)       | NO   | PRI | NULL    | auto_increment | 
+| season     | int(11)       | NO   |     | NULL    |                | 
+| ep_num     | int(11)       | NO   |     | NULL    |                | 
+| quote_text | varchar(1000) | NO   |     | NULL    |                | 
+| anchor     | varchar(10)   | YES  |     | NULL    |                | 
++------------+---------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> describe ref;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment | 
+| season      | int(11)      | NO   |     | NULL    |                | 
+| ep_num      | int(11)      | NO   |     | NULL    |                | 
+| description | varchar(500) | NO   |     | NULL    |                | 
+| category    | varchar(200) | NO   |     | NULL    |                | 
+| catname     | varchar(100) | YES  |     | NULL    |                | 
+| anchor      | varchar(10)  | YES  |     | NULL    |                | 
+| thing       | varchar(300) | NO   |     | NULL    |                | 
++-------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.01 sec)
+
+mysql> describe transcript;
++------------+-----------------------+------+-----+---------+-------+
+| Field      | Type                  | Null | Key | Default | Extra |
++------------+-----------------------+------+-----+---------+-------+
+| line_num   | mediumint(8) unsigned | NO   |     | NULL    |       | 
+| pseudonym  | text                  | YES  |     | NULL    |       | 
+| quote      | enum('TRUE')          | YES  |     | NULL    |       | 
+| ref        | enum('TRUE')          | YES  |     | NULL    |       | 
+| anchor     | tinytext              | YES  |     | NULL    |       | 
+| flashback  | enum('BEGIN','END')   | YES  |     | NULL    |       | 
+| scenebreak | enum('TRUE')          | YES  |     | NULL    |       | 
+| season     | tinyint(4)            | NO   |     | NULL    |       | 
+| ep_num     | tinyint(4)            | NO   |     | NULL    |       | 
+| speaker    | text                  | YES  |     | NULL    |       | 
+| stripname  | text                  | YES  |     | NULL    |       | 
+| line       | mediumtext            | YES  |     | NULL    |       | 
++------------+-----------------------+------+-----+---------+-------+
+12 rows in set (0.02 sec)
+
+mysql> describe website; # For holding websites mentioned in vmars
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment | 
+| season      | int(11)      | NO   |     | NULL    |                | 
+| ep_num      | int(11)      | NO   |     | NULL    |                | 
+| website     | varchar(80)  | NO   |     | NULL    |                | 
+| description | varchar(500) | NO   |     | NULL    |                | 
++-------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> notee;

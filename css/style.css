@@ -1,0 +1,16 @@
+
+/* Change the style so it works when it's on the side, too. */
+/*
+#fk_change_type_id .inside a.button, #fk_change_type_id .inside a.button-primary {
+    float: left;
+    margin: 2px;
+}
+#fk_change_type_id .inside {
+    padding-bottom: 50px;
+}
+*/
+/* The "hide this box" message for admin notices. */
+#fk_hide_message {
+	float: right;
+	padding-top: 3px;
+}

@@ -1,0 +1,76 @@
+div.line.highlight { /* be specific */
+    /*background-color: #FFFFDD; /* light yellow */
+    background-color: #FFFF9C; /* deep yellow */
+}
+
+#lipsum {
+    margin-left: 30px; /* perfectly inside div#content */
+}
+
+.line {
+    /* pull it to the left to make the box big enough for the bg image...*/
+    margin-left: -30px;
+    /* ..then push it back to the right.*/
+    padding-left: 30px;
+    /* padding makes room for box, margin pushes out box to include padding */
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.line.offedit, .line.refedit, .line.quoteedit {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.line.offedit { background-image: url("../testing/img/offedit.png"); }
+.line.refedit { background-image: url("../testing/img/refedit.png"); }
+.line.quoteedit { background-image: url("../testing/img/quoteedit.png"); }
+
+/* links to switch mode */
+#switch_quote a.box, #switch_ref a.box {
+    margin-bottom: 5px;
+    display: block;
+    width: 100px;
+    height: 36px;
+}
+
+#switch_quote,  #switch_ref {
+    background: transparent url(../img/add2.png) no-repeat 0 10px;
+    padding-left: 16px; /* 16x16 */
+}
+
+#switch_quote a.box {
+    /*background: transparent url(../img/addquote.png) no-repeat top left;*/
+    width: 36px;
+    height: 40px;
+    background: transparent url(../img/qbox.png) no-repeat top left;
+}
+
+#switch_ref a.box {
+    width: 36px;
+    height: 40px;
+    background: transparent url(../img/rbox.png) no-repeat top left;
+}
+
+/* box displaying which mode we're in */
+#modebox {
+    /* box showing which mode we're in */
+    position: fixed;
+    top: 150px; /* height of logo */
+    left: 20px;
+}
+
+#quote_mode, #ref_mode {
+    padding: 10px;
+    display: none;
+}
+
+#modebox #quote_mode {
+    background-color: #ADD8E6; /* lightblue */
+}
+#modebox #ref_mode {
+    background-color: #FFC0CB; /* pink */
+}

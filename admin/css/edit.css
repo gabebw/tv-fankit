@@ -1,0 +1,40 @@
+#content {
+    margin-left: 30px; /* line boxes are perfectly inside div#content */
+}
+
+.line {
+    /* pull it to the left to make the box big enough for the bg image...*/
+    margin-left: -30px;
+    /* ..then push it back to the right.*/
+    padding-left: 30px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+
+    cursor: pointer;
+    cursor: hand;
+}
+
+.offedit { background-image: url(../img/offedit.png); }
+
+#content .highlight {
+    background-color: #FFFF9C; /* deep yellow */
+}
+
+#content .overlap {
+    background-color: #C9A0DC !important; /* lavender (or 'wisteria') */
+}
+
+#content div.selected {/*specific so .selected doesn't interfere with the tabs*/
+    background-image: url(../img/quoteedit.png);
+    background-color: #FFFF9C; /* deep yellow */
+}
+
+#modebox {
+    /* box showing which mode we're in */
+    position: fixed;
+    top: 150px; /* height of logo */
+    left: 20px;
+}

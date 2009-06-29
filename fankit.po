@@ -1,0 +1,193 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TV Fan Kit\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-23 21:03-0500\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Gabe Berke-Williams <gbw@brandeis.edu>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_c\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit\n"
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:58
+msgid "Add New Episode"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:59
+msgid "Add New Cast Member"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:60
+msgid "Add New Character"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:61
+msgid "TV Fan Kit Options"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:61
+msgid "TV Fan Kit"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:74
+msgid "Edit|post"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:76
+msgid "Add New|post"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-admin-menu.php:87
+msgid "TV FanKit Post Type"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-cast.php:16
+msgid ""
+"The post title will be the actor or actress's name, and the\n"
+"\t\tpost content will be a description of them. To add characters that this character has played or other information, look at the boxes below."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-cast.php:26
+msgid "Add Characters Played By This Actor/Actress"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-cast.php:41
+msgid "Note: if a character is not listed, you can <a href=\""
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-cast.php:45
+#, php-format
+msgid "No characters exist. Maybe you want to <a href=\"%s\">add one</a>?"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:35
+msgid "You are adding a new character. The post title will be the character's name, and the post content will be a description of this character. To mark which actor or actress plays this character, which episodes this character appears in, and more, see the boxes below."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:45
+msgid "Appearances"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:63
+#, php-format
+msgid "No episodes have been added. Maybe you want to <a href=\"%s\">add one</a>?"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:66
+msgid "After you've added one, you can come back here and add appearances for this character."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:98
+msgid "Mark The Actor/Actress Who Plays This Character"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:115
+#, php-format
+msgid "No actors or actresses have been added. Maybe you want to <a href=\"%s\">add one</a>?"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-character.php:118
+msgid "After you've added a cast member, you can come back here and mark which actor plays this character."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:22
+msgid "You are adding a new episode. "
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:24
+msgid "The post title will be the episode title, and the post content will be the episode description. To add more information, including a transcript, use the boxes below the writing area. To add a post page, do BLAHHH"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:31
+msgid "TV Fan Kit - Episode Information"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:33
+msgid "TV Fan Kit - Episode Transcript"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:52
+msgid "Season"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:54
+msgid "Episode Number"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:59
+msgid "After you've saved this post you can mark characters who appeared in this episode."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:64
+msgid "No characters have been marked as appearing in this episode."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-box-episode.php:70
+#, php-format
+msgid "No characters have been added. Maybe you want to <a href=\"%s\">add one</a>?"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-boxes.php:54
+msgid "This is a normal wordpress post. To take advantage of everything that TV Fan Kit offers, try clicking on \"Add New Episode\", \"Add New Cast Member\", or \"Add New Character\" under the Posts menu to the left. You can also change the type of existing posts in the \"Set Post Type\" box under the writing area."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-boxes.php:60
+msgid "Set Post Type"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-boxes.php:82
+msgid "Select a type and click \"Publish\" or \"Update Post\" to change the type of this post. New boxes will appear after you save the new type, so click \"Publish\" or \"Update Post\" immediately after changing the type to take advantage of it."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-boxes.php:86
+msgid "Note: if you drag this box, the type may look like it is deselected. This is fine. Simply re-select your desired type, or leave it alone if you don't want to change the type."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-boxes.php:89
+msgid "Current type:"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-boxes.php:94
+msgid "(selecting this will remove all FanKit info associated with this post)"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-lib.php:114
+msgid "[go here to hide FanKit messages]"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-lib.php:163
+msgid "Quotes for|episode"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-options-page.php:25
+msgid "If this is checked, then when TV Fan Kit is deactivated, all of its information (characters, cast, episode, etc.) will be deleted. This WILL NOT delete your posts; they will just not have the extra Fan Kit data anymore. Defaults to not checked."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-options-page.php:44
+msgid "Show helpful getting-started notices when editing posts."
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-options-page.php:52
+msgid "Save Changes"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-settings.php:98
+msgid "Episode"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-settings.php:99
+msgid "Cast Member"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-settings.php:100
+msgid "Character"
+msgstr ""
+
+#: /Library/WebServer/Documents/wordpress/wp-content/plugins/tv-fankit/fk-settings.php:101
+msgid "Normal Wordpress Post"
+msgstr ""
+

@@ -1,0 +1,16 @@
+Make an icon to click to make someone important/not important
+- if not important, remove their cast page! - ask for confirmation
+
+Refs??
+- yeah, in general: "???"
+- how to add/remove/show them?
+- then have reference category editor
+- have reference be by line.
+- a reference is "attached" to a word, but have a little "edit refs for this line" link by the line instead of splitting the line and wrapping each word.
+- of course, wrap each word once they hit "edit refs", but not until then
+in the link/box by the line, show all ref words for that line
+"SELECT thing FROM ref WHERE season=2 AND ep_num=1 AND line_num=23"
+
+add editor for editing cast member name
+- run a query to see if it's important & return that from callback?
+- like ['Veronica Mars', true] or {name: 'Veronica Mars', important: true}
