@@ -3,6 +3,9 @@
  * Library of general, non-type-specific functions.
  * @package FanKit
  */
+require_once('fk-lib-character.php');
+require_once('fk-lib-cast.php');
+require_once('fk-lib-episode.php');
 
 /**
  * Easy way to get a guessable name for a character, episode, etc.

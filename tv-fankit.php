@@ -35,11 +35,7 @@ if( is_admin() ){
 	require_once('fk-debug.php');
 	// dpr($_POST);
 	// General-purpose functions that all page types use.
-	require_once('fk-lib.php');
-	// Get type-specific functions
-	require_once('fk-lib-character.php');
-	require_once('fk-lib-cast.php');
-	require_once('fk-lib-episode.php');
+	// This also loads fk-lib-{character,cast,episode}.php
 	require_once('fk-settings.php');
 	require_once('fk-error.php');
 	// (Un)install functions and hooks.
