@@ -39,14 +39,16 @@ function fk_episode_notices(){
 function _fk_episode_boxes(){
 	if( function_exists('add_meta_box')){
 		// Add a box where user specifies the general episode info.
-		add_meta_box('fk_episode_box_id', __("TV Fan Kit - Episode Information"), 'fk_episode_info_box_cb', 'page', 'normal');
+		add_meta_box('fk_episode_box_season_ep_num_id', __("TV Fan Kit - Episode Season/Episode"), 'fk_episode_season_ep_num_box_cb', 'page', 'normal');
+		// Box for marking which characters appear in this episode
+		add_meta_box('fk_episode_box_characters_id', __("TV Fan Kit - Characters"), 'fk_episode_characters_box_cb', 'page', 'normal');
 		// Add separate box for transcript, since it can be huge and user may want to drag it out of the way.
 		add_meta_box('fk_episode_box_transcript_id', __("TV Fan Kit - Episode Transcript"), 'fk_episode_transcript_box_cb', 'page', 'normal');
 	}
 }
 
-// Callback for general episode info metabox
-function fk_episode_info_box_cb(){
+// Callback for episode season/ep_num metabox
+function fk_episode_season_ep_num_box_cb(){
 	global $post, $fk_settings;
 	list($default_season, $default_ep_num) = fk_episode_get_season_ep_num($post->ID);
 	if( $default_season === false || $default_ep_num === false ){
@@ -63,7 +65,12 @@ function fk_episode_info_box_cb(){
 	printf('<label for="fk_ep_num_id">%s:</label>', __('Episode Number'));
 	echo '<input type="text" id="fk_ep_num_id" name="fk_ep_num" value="'.$default_ep_num.'" size="10" tabindex="201" />';
 	echo '</div>';
-	
+}
+
+// Callback for metabox with characters who appear in this episode
+function fk_episode_characters_box_cb(){
+	global $post, $fk_settings;
+	wp_nonce_field('fk_set_characters', 'fk_characters_nonce');
 	echo '<p>';
 	if( 0 === $post->ID ){
 		_e("After you've saved this page you can mark characters who appeared in this episode.");
@@ -79,18 +86,18 @@ function fk_episode_info_box_cb(){
 		} else {
 			echo '<p>';
 			foreach( (array) $all_characters as $ch ){
+				$ch_id = $ch->character_id;
 				// FIXME - characters by letter
 				$current_letter = '';
-				$checked = fk_character_appears_in($ch->character_id, $post->ID) ? ' checked="checked"' : '';
-				printf('<label><input type="checkbox" name="fk_characters[]" value="%1$s" %2$s /> %3$s</label>',
-				       $ch->character_id, $checked, $ch->name);
+				$checked = fk_character_appears_in($ch_id, $post->ID) ? ' checked="checked"' : '';
+				printf('<label><input type="checkbox" name="fk_characters[]" value="%1$s"%2$s /> %3$s</label>',
+					$ch_id, $checked, $ch->name);
+				printf(' (<a href="%s">view</a> or <a href="%s">edit</a>)',
+					get_permalink($ch_id), get_edit_post_link($ch_id));
 				echo '<br />';
 			}
 			echo '</p>';
 		}
-
-		//dpr($characters);
-		//dpr($all_characters);
 	}
 	echo '</p>';
 }
@@ -107,6 +114,7 @@ function fk_save_page_episode($post_id){
 		// - maybe use revisions, if they're enabled. Because they can be turned off - see page on editing wp-config.php
 		return;
 	}
+	check_admin_referer('fk_set_characters', 'fk_characters_nonce');
 	check_admin_referer('fk_set_episode_info', 'fk_episode_info_nonce');
 	check_admin_referer('fk_set_episode_transcript', 'fk_episode_transcript_nonce');
 	
@@ -122,7 +130,7 @@ function fk_save_page_episode($post_id){
 	}
 
 	if( fk_episode_exists($post_id) ){
-		fk_episode_add($post_id, $season, $ep_num, $characters);
+		fk_episode_edit($post_id, $season, $ep_num, $characters);
 	} else {
 		fk_episode_add($post_id, $season, $ep_num, $characters);
 	}

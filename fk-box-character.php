@@ -63,10 +63,6 @@ function fk_box_cb_character_appearances(){
 		echo '<br />';
 		_e("After you've added at least one episode, you can come back here and mark which episodes this character appears in.");
 	} else {
-		// $already_appeared_in tracks episodes that the character has already been marked as having been in, so we can check them.
-		// Empty array if no appearances.
-		$already_appeared_in = fk_episode_get_characters($post->ID);
-
 		// TODO: select all eps in a season - even w/o JS
 		// - place the following in a div with class hide-if-js (handled by WP):
 		// "If you check this, all episodes in the season will be added even if others in the season are checked"
@@ -78,7 +74,7 @@ function fk_box_cb_character_appearances(){
 		foreach( $all_episodes as $ep ){
 			$title = get_post_field('post_title', $ep->episode_id);
 			$css_id = "episode-{$ep->episode_id}"; // "episode-52" - not using season/ep-num because those might not be unique
-			$checked = (in_array($ep->episode_id, $already_appeared_in) ? ' checked="checked"' : '');
+			$checked = fk_character_appears_in($post->ID, $ep->episode_id) ? ' checked="checked"' : '';
 			echo "<label for=\"$css_id\">";
 			// prints out a checkbox with a label like
 			// 02x01 - "Normal Is The Watchword"

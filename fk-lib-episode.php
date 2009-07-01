@@ -31,8 +31,8 @@ function fk_episode_edit($episode_id, $new_season, $new_ep_num, $new_characters)
 		return new WP_Error('episode_does_not_exist', "Oh no, episode doesn't exist!");
 	}
 	// Page does exist; check values and update as necessary.
-	list($old_season, $old_ep_num) = fk_episode_get_season_ep_num($post_id);
-	$old_characters = fk_episode_get_characters($post_id);
+	list($old_season, $old_ep_num) = fk_episode_get_season_ep_num($episode_id);
+	$old_characters = fk_episode_get_characters($episode_id);
 	$old = array('season' => $old_season,
 		'ep_num' => $old_ep_num,
 		'characters' => $old_characters);
@@ -41,33 +41,33 @@ function fk_episode_edit($episode_id, $new_season, $new_ep_num, $new_characters)
 		'characters' => $new_characters);
 	// wp_parse_args will overwrite values in $old with $values in $new
 	$merged = wp_parse_args($new, $old);
-	foreach( (array) $merged as $key => $value ){
+	foreach( (array) $merged as $key => $new_value ){
 		switch($key){
 		case 'season':
-			if( '' !== $value && ! is_numeric($value) ){
-				var_dump($value);
+			if( '' !== $new_value && ! is_numeric($new_value) ){
+				var_dump($new_value);
 				// must be a number or a blank string
 				return new WP_Error('bad_season', "Episode's season must be a number.");
 			} else {
-				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET season = %d WHERE episode_id = %d", $value, $episode_id));
+				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET season = %d WHERE episode_id = %d", $new_value, $episode_id));
 			}
 			break;
 		case 'ep_num':
-			if( '' !== $value && ! is_numeric($value) ){
+			if( '' !== $new_value && ! is_numeric($new_value) ){
 				return new WP_Error('bad_ep_num', "Episode's episode number must be a number.");
 			} else {
-				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET ep_num = %d WHERE episode_id = %d", $value, $episode_id));
+				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET ep_num = %d WHERE episode_id = %d", $new_value, $episode_id));
 			}
 			break;
 		case 'characters':
-			$new_characters = $value;
-			// characters in $delete_characters no longer appear in the current episode.
+			// $delete_characters is characters that are only in $old_characters
 			$delete_characters = array_diff($old_characters, $new_characters);
-			foreach( (array) $delete_characters as $del ){
-				fk_character_delete_appearance($del, $post_id);
+			$add_characters = array_diff($new_value, $delete_characters);
+			foreach( (array) $delete_characters as $del_id ){
+				fk_character_delete_appearance($del_id, $episode_id);
 			}
-			foreach( (array) $new_characters as $character_id ){
-				fk_character_add_appearance($character_id, $post_id);
+			foreach( (array) $add_characters as $add_id){
+				fk_character_add_appearance($add_id, $episode_id);
 			}
 			break;
 		}

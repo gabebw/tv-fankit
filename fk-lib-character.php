@@ -11,7 +11,7 @@
  * @param int $cast_id (optional) The id of the actor/actress who plays this character.
  * @param array $appearances (optional) An array of episode_id's that the character appeared in.
  */
-function fk_character_add($character_id,  $cast_id = null, $appearances=array()){
+function fk_character_add($character_id, $cast_id = null, $appearances=array()){
 	global $wpdb, $fk_settings;
 	
 	if( fk_character_exists($character_id) ){
@@ -51,19 +51,18 @@ function fk_character_delete($character_id){
 }
 
 /**
- * Edit a character, eg add an episode, change who plays them, etc. Can pass in either array or query-string, similar to get_pages().
- * Currently the only possible parameters are
- * appearances - pass in an array of episode_id's
- * cast_member - pass in cast_id of actor/actress who plays the character
- * @see get_pages()
+ * Edit a character, eg add an episode, change who plays them, etc. 
  * @param int $character_id
- * @param array|string $new The query-string or array of options to update.
+ * @param string $new_cast The new cast member who plays the characters
+ * @param array $new_appearances Array of episode ID's that the character appears in
  */
 function fk_character_edit($character_id, $new_cast, $new_appearances){
 	global $wpdb, $fk_settings;
 	$new = array('cast' => $new_cast,
+		'name' => $_POST['post_title'], // in $_POST but not yet saved
 		'appearances' => $new_appearances);
 	$defaults = array('cast' => fk_character_get_actor($character_id),
+		'name' =>  get_post_field('post_title', $character_id), // previously-saved, not-yet-updated value
 		'appearances' => fk_character_get_appearances($character_id));
 	$merged = wp_parse_args($new, $defaults);
 	foreach( $merged as $field => $value ){
@@ -84,7 +83,7 @@ function fk_character_edit($character_id, $new_cast, $new_appearances){
 			foreach( $to_delete as $episode_id ){
 				fk_character_delete_appearance($character_id, $episode_id);
 			}
-		} elseif( $field === 'cast_member' ){
+		} elseif( $field === 'cast' ){
 			$cast_id = $value;
 			// Change/Add the cast member who plays this character
 			$update_result = $wpdb->query($wpdb->prepare("UPDATE $fk_settings->cast2character_table
@@ -97,6 +96,10 @@ function fk_character_edit($character_id, $new_cast, $new_appearances){
 					VALUES ( %d, %d )",
 						$cast_id, $character_id));
 			}
+		} elseif( $field === 'name' ){
+			$wpdb->query($wpdb->prepare("UPDATE $fk_settings->character_table
+				SET name = %s WHERE character_id = %d",
+				$value, $character_id));
 		}
 	}
 }
