@@ -66,7 +66,7 @@ function fk_generate_menu(){
 
 function fk_change_title(){
 	global $editing, $fk_settings, $action, $title;
-	if( ! $editing  // don't change title if we're not editing (eg just looking at list of pages) - this is only set in post/page context
+	if( ! $editing // only change title if we're editing (eg not just looking at list of pages) - this is only set in post/page context
 	    || $fk_settings->type === 'none' // don't change title for normal pages
 	    || ! $fk_settings->on_page_page ){ // Only change title for pages.
 		return false;
@@ -86,7 +86,7 @@ function fk_change_title(){
  * @see _page_row()
  */
 function add_custom_column_hook($defaults) {
-	$defaults['fk_type'] = __('TV FanKit Page Type');
+	$defaults['fk_type'] = __('TV Fan Kit Page Type');
 	return $defaults;
 }
 
