@@ -35,7 +35,7 @@ function fk_character_add($character_id,  $cast_id = null, $appearances=array())
 		}
 		// todo: is there a way to add all appearances in just one mysql query?
 		// maybe have $episode_id optionally be an array
-		fk_character_add_appearance_for($character_id, $episode_id);
+		fk_character_add_appearance($character_id, $episode_id);
 	}
 }
 
@@ -62,7 +62,7 @@ function fk_character_delete($character_id){
 function fk_character_edit($character_id, $new){
 	global $wpdb, $fk_settings;
 	$defaults = array('appearances' => fk_character_get_appearances($character_id),
-		'cast_member' => fk_get_actor_who_plays($character_id));
+		'cast_member' => fk_character_get_actor($character_id));
 	$merged = wp_parse_args($new, $defaults);
 	foreach( $merged as $field => $value ){
 		if( $defaults[$field] === $value || is_null($value) ){
