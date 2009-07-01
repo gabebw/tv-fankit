@@ -102,10 +102,6 @@ class FK_settings {
 
 		$this->completely_uninstall = ( 'on' === get_option('fk_completely_uninstall') );
 		$this->show_notices = ('on' === get_option('fk_show_notices'));
-		$this->default_air_time = get_option('fk_default_air_time');
-		if( false === $this->default_air_time ){
-			$this->default_air_time = '';
-		}
 
 		$this->on_post_page = in_array($pagenow, array('post-new.php', 'post.php', 'edit.php'));
 		$this->on_page_page = in_array($pagenow, array('page-new.php', 'page.php', 'edit-pages.php'));
@@ -129,9 +125,6 @@ class FK_settings {
 		}
 		if( ! update_option('fk_show_notices', 'on') ){
 			add_option('fk_show_notices', 'on');
-		}
-		if( ! update_option('fk_default_air_time', '') ){
-			add_option('fk_default_air_time', '');
 		}
 	}
 
