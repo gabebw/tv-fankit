@@ -99,10 +99,9 @@ function fk_get_page_type($page_id){
  */
 function fk_show_basic_notice($txt){
 	echo '<div id="fk_message" class="updated">';
-	echo '<div id="fk_hide_message">';
-	echo '<a href="options-general.php?page=tv-fankit/fk-options-page.php">'.__('[go here to hide FanKit messages]').'</a>';
-	echo '</div>';
-	echo '<p><b>'.__('Welcome to TV FanKit!').'</b></p>';
+	echo '<p><b>'.__('Welcome to TV FanKit!').'</b>';
+	echo ' <small><a href="options-general.php?page=tv-fankit/fk-options-page.php">'.__('(Hide FanKit messages)').'</a></small>';
+	echo'</p>';
 	echo "<p>$txt</p>";
 	echo '</div>';
 }
