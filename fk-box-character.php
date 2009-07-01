@@ -32,9 +32,12 @@ function fk_add_character_boxes(){
 function fk_character_notices(){
 	global $post;
 	if( 0 === $post->ID ){
-		$txt = __("You are adding a new character. The page title is the character's name, and the page content is a description of this character. To mark which actor or actress plays this character, which episodes this character appears in, and more, see the boxes below.");
-		fk_show_basic_notice($txt);
+		$pre_character_txt = __("You are adding a new character.");
+	} else {
+		$pre_character_txt = __("You are editing a character.");
 	}
+	$txt = $pre_character_txt . ' ' . __("The page title is the character's name, and the page content is a description of this character. To mark which actor or actress plays this character, which episodes this character appears in, and more, see the boxes below.");
+	fk_show_basic_notice($txt);
 }
 
 /**
@@ -43,8 +46,6 @@ function fk_character_notices(){
 function fk_box_add_character_appearances(){
 	if( function_exists( 'add_meta_box' )){
 		add_meta_box('fk_episode_id', __("TV Fan Kit - Appearances"), 'fk_box_cb_character_appearances', 'page', 'normal');
-	} else {
-		// FIXME
 	}
 }
 
