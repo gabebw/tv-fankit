@@ -59,10 +59,12 @@ function fk_character_delete($character_id){
  * @param int $character_id
  * @param array|string $new The query-string or array of options to update.
  */
-function fk_character_edit($character_id, $new){
+function fk_character_edit($character_id, $new_cast, $new_appearances){
 	global $wpdb, $fk_settings;
-	$defaults = array('appearances' => fk_character_get_appearances($character_id),
-		'cast_member' => fk_character_get_actor($character_id));
+	$new = array('cast' => $new_cast,
+		'appearances' => $new_appearances);
+	$defaults = array('cast' => fk_character_get_actor($character_id),
+		'appearances' => fk_character_get_appearances($character_id));
 	$merged = wp_parse_args($new, $defaults);
 	foreach( $merged as $field => $value ){
 		if( $defaults[$field] === $value || is_null($value) ){
@@ -80,7 +82,7 @@ function fk_character_edit($character_id, $new){
 			}
 			// delete
 			foreach( $to_delete as $episode_id ){
-				fk_character_remove_appearance($character_id, $episode_id);
+				fk_character_delete_appearance($character_id, $episode_id);
 			}
 		} elseif( $field === 'cast_member' ){
 			$cast_id = $value;

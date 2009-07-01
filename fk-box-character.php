@@ -140,7 +140,7 @@ function fk_save_page_character($post_id){
 	$cast = $_POST['fk_cast'];
 	$appearances = $_POST['fk_appearances']; // array
 	if( fk_character_exists($post_id) ){
-		fk_character_edit($post_id, array('cast_member' => $cast, 'appearances' => $appearances));
+		fk_character_edit($post_id, $cast, $appearances);
 	} else {
 		// new character
 		fk_character_add($post_id, $cast, $appearances);
