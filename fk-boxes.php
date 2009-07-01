@@ -37,13 +37,13 @@ function fk_boxes_init(){
 }
 
 /**
- * Notices that are shown for a normal wordpress page.
+ * Notices that are shown for a regular wordpress page.
  */
 function fk_none_notices(){
 	global $editing;
 	if( true === $editing ){
 		// Don't show this when we're on the "edit all pages" page
-		$pre_txt = __('This is a normal wordpress page.') . ' ';
+		$pre_txt = __('This is a regular Wordpress page.') . ' ';
 		$post_txt = ' ' . __('You can also change the type of existing pages in the "Set Page Type" box under the writing area.');
 	}
 	$txt = $pre_txt . __('To take advantage of everything that TV Fan Kit offers, try clicking on "Add New Episode", "Add New Cast Member", or "Add New Character" under the Pages menu to the left.') . $page_txt;
