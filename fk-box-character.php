@@ -42,7 +42,7 @@ function fk_character_notices(){
  */
 function fk_box_add_character_appearances(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_episode_id', __("Appearances"), 'fk_box_cb_character_appearances', 'page', 'normal');
+		add_meta_box('fk_episode_id', __("TV Fan Kit - Appearances"), 'fk_box_cb_character_appearances', 'page', 'normal');
 	} else {
 		// FIXME
 	}
@@ -61,7 +61,7 @@ function fk_box_cb_character_appearances(){
 		printf(__('No episodes have been added. Maybe you want to <a href="%s">add one</a>?'),
 			$fk_settings->new_episode_link);
 		echo '<br />';
-		_e("After you've added one, you can come back here and add appearances for this character.");
+		_e("After you've added at least one episode, you can come back here and mark which episodes this character appears in.");
 	} else {
 		// $already_appeared_in tracks episodes that the character has already been marked as having been in, so we can check them.
 		// Empty array if no appearances.
@@ -84,8 +84,8 @@ function fk_box_cb_character_appearances(){
 			// 02x01 - "Normal Is The Watchword"
 			printf('<input id="%s" type="checkbox"%s name="fk_appearances[]" value="%d" />',
 				$css_id, $checked, $ep->episode_id);
-			printf('%02dx%02d - "%s"</label> (<a href="%s">view</a>)',
-				$ep->season,$ep->ep_num, $title, get_permalink($ep->episode_id));
+			printf('%02dx%02d - "%s"</label> (<a href="%s">view</a> or <a href="%s">edit</a>)',
+				$ep->season,$ep->ep_num, $title, get_permalink($ep->episode_id), get_edit_post_link($ep->episode_id));
 			echo '<br />';
 		}
 	}
@@ -123,8 +123,8 @@ function fk_box_cb_add_actor_for_character(){
 			echo "<label for=\"$css_id\">";
 			printf('<input id="%1$s" type="radio"%2$s name="fk_cast" value="%3$d" />',
 				$css_id, $checked, $id);
-			printf('%s</label> (<a href="%s">view</a>)',
-				$cm->name, get_permalink($id));
+			printf('%s</label> (<a href="%s">view</a>) or <a href="%s">edit</a>)',
+				$cm->name, get_permalink($id), get_edit_post_link($ep->episode_id));
 			echo '<br />';
 		}
 	}
