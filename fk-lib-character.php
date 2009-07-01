@@ -11,7 +11,7 @@
  * @param int $cast_id (optional) The id of the actor/actress who plays this character.
  * @param array $appearances (optional) An array of episode_id's that the character appeared in.
  */
-function fk_add_character($character_id,  $cast_id = null, $appearances=array()){
+function fk_character_add($character_id,  $cast_id = null, $appearances=array()){
 	global $wpdb, $fk_settings;
 	
 	if( fk_character_exists($character_id) ){
@@ -35,7 +35,7 @@ function fk_add_character($character_id,  $cast_id = null, $appearances=array())
 		}
 		// todo: is there a way to add all appearances in just one mysql query?
 		// maybe have $episode_id optionally be an array
-		fk_add_appearance_for($character_id, $episode_id);
+		fk_character_add_appearance_for($character_id, $episode_id);
 	}
 }
 
@@ -43,7 +43,7 @@ function fk_add_character($character_id,  $cast_id = null, $appearances=array())
  * Delete a character. Deletes appearances, relationships to cast members as well. DOES NOT delete actor who played the character.
  * @param int $character_id The id of the character to delete.
  */
-function fk_delete_page_character($character_id){
+function fk_character_delete($character_id){
 	global $wpdb, $fk_settings;
 	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->character_table AS ch, $fk_settings->cast2character_table AS cc,
 		$fk_settings->appearance_table AS app WHERE ch.character_id = %d AND cc.character_id = %d AND app.character_id = %d ",
@@ -59,7 +59,7 @@ function fk_delete_page_character($character_id){
  * @param int $character_id
  * @param array|string $new The query-string or array of options to update.
  */
-function fk_edit_character($character_id, $new){
+function fk_character_edit($character_id, $new){
 	global $wpdb, $fk_settings;
 	$defaults = array('appearances' => fk_character_get_appearances($character_id),
 		'cast_member' => fk_get_actor_who_plays($character_id));
@@ -76,11 +76,11 @@ function fk_edit_character($character_id, $new){
 			$to_add = array_diff($value, $defaults['appearances']);
 			// add
 			foreach( $to_add as $episode_id ){
-				fk_add_appearance_for($character_id, $episode_id);
+				fk_character_add_appearance($character_id, $episode_id);
 			}
 			// delete
 			foreach( $to_delete as $episode_id ){
-				fk_remove_appearance_for($character_id, $episode_id);
+				fk_character_remove_appearance($character_id, $episode_id);
 			}
 		} elseif( $field === 'cast_member' ){
 			$cast_id = $value;
@@ -161,7 +161,7 @@ function fk_character_exists($character_id){
  * @param int $episode_id
  * @return bool False if character already added to episode or episode or character does not exist, true otherwise.
  */
-function fk_add_appearance_for($character_id, $episode_id){
+function fk_character_add_appearance($character_id, $episode_id){
 	global $wpdb, $fk_settings;
 	if( ! ( fk_character_exists($character_id) && fk_episode_exists($episode_id) ) ){
 		return false;
@@ -181,7 +181,7 @@ function fk_add_appearance_for($character_id, $episode_id){
  * Remove a character from an episode.
  * @return bool False if character did not appear in episode, true otherwise. (I think.)
  */
-function fk_remove_appearance_for($character_id, $episode_id){
+function fk_character_remove_appearance($character_id, $episode_id){
 	global $wpdb, $fk_settings;
 	$return = $wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->appearance_table
 		WHERE character_id = %d AND episode_id = %d",
@@ -193,7 +193,7 @@ function fk_remove_appearance_for($character_id, $episode_id){
  * Get all characters.
  * @return array Returns an array of objects with character_id and name variables. Returns empty array if no character pages exist.
  */
-function fk_get_all_characters(){
+function fk_character_get_all(){
 	global $wpdb, $fk_settings;
 	$characters = $wpdb->get_results($wpdb->prepare("SELECT character_id, name FROM $fk_settings->character_table ORDER BY name ASC"));
 	return $characters;

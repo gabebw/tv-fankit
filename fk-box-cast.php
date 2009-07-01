@@ -33,7 +33,7 @@ function fk_box_link_cast_to_character(){
  */
 function fk_box_cb_link_cast_to_character(){
 	global $fk_settings, $post;
-	$all_character_pages = fk_get_all_characters();
+	$all_character_pages = fk_character_get_all();
 
 	// Use nonce for verification
 	wp_nonce_field('fk_set_character_name', 'fk_set_character_name_nonce');
@@ -70,6 +70,6 @@ function fk_save_page_cast($page_id){
 	}
 	check_admin_referer('fk_set_character_name', 'fk_set_character_name_nonce');
 	$characters = $_POST['fk_characters']; // array(32, 9, 10)
-	fk_add_cast($page_id, $characters);
+	fk_cast_add($page_id, $characters);
 }
 ?>

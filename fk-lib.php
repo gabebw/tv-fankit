@@ -148,7 +148,7 @@ function fk_write_episode_quote_page($episode_id){
 	if( ! fk_episode_exists($episode_id) ){
 		return false;
 	}
-	list($season, $ep_num) = fk_get_season_ep_num($episode_id);
+	list($season, $ep_num) = fk_episode_get_season_ep_num($episode_id);
 	$page_title = __("Quotes for Episode") . sprintf("%02dx%02d: %s", $season, $ep_num, $title);
 	// TODO: post_parent - depends on season or episode
 	// TODO: page_template - depends on whether season or episode

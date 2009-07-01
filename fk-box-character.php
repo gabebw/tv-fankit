@@ -55,7 +55,7 @@ function fk_box_cb_character_appearances(){
 	global $fk_settings, $post;
 	wp_nonce_field('fk_character_appearance', 'fk_character_appearance_nonce');
 
-	$all_episodes = fk_get_all_episodes();
+	$all_episodes = fk_episode_get_all();
 	echo '<p>';
 	if( empty($all_episodes) ){
 		printf(__('No episodes have been added. Maybe you want to <a href="%s">add one</a>?'),
@@ -65,7 +65,7 @@ function fk_box_cb_character_appearances(){
 	} else {
 		// $already_appeared_in tracks episodes that the character has already been marked as having been in, so we can check them.
 		// Empty array if no appearances.
-		$already_appeared_in = fk_get_appearances_for($post->ID);
+		$already_appeared_in = fk_episode_get_characters($post->ID);
 
 		// TODO: select all eps in a season - even w/o JS
 		// - place the following in a div with class hide-if-js (handled by WP):
@@ -102,7 +102,7 @@ function fk_box_add_actor_for_character(){
 
 function fk_box_cb_add_actor_for_character(){
 	global $post, $fk_settings;
-	$all_cast = fk_get_all_cast();
+	$all_cast = fk_cast_get_all();
 	if( 0 === $post->ID ){
 		$played_by = false;
 	} else {
@@ -140,10 +140,10 @@ function fk_save_page_character($post_id){
 	$cast = $_POST['fk_cast'];
 	$appearances = $_POST['fk_appearances']; // array
 	if( fk_character_exists($post_id) ){
-		fk_edit_character($post_id, array('cast_member' => $cast, 'appearances' => $appearances));
+		fk_character_edit($post_id, array('cast_member' => $cast, 'appearances' => $appearances));
 	} else {
 		// new character
-		fk_add_character($post_id, $cast, $appearances);
+		fk_character_add($post_id, $cast, $appearances);
 	}
 	return true;
 }

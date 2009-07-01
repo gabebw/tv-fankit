@@ -52,7 +52,7 @@ function fk_none_notices(){
 
 function fk_box_type(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_change_type_id', __("Set Page Type"), 'fk_box_cb_type', 'page', 'normal');
+		add_meta_box('fk_change_type_id', __("TV Fan Kit - Set Page Type"), 'fk_box_cb_type', 'page', 'normal');
 	}
 }
 

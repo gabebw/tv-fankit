@@ -9,7 +9,7 @@
  * @param int $cast_id  the page id corresponding to the wordpress page that holds the character.
  * @param array $characters (Optional) An array of characters played by this actor. 
  */
-function fk_add_cast($cast_id, $characters=array()){
+function fk_cast_add($cast_id, $characters=array()){
 	// TODO: pseudonym?
 	global $wpdb, $fk_settings;
 	$name = get_post_field('post_title', $cast_id);
@@ -38,7 +38,7 @@ function fk_add_cast($cast_id, $characters=array()){
  * @param array $new Specify only the parameters you wish to change. You can use query-string syntax like in get_pages.
  * @see get_pages()
  */
-function fk_edit_cast($cast_id, $new){
+function fk_cast_edit($cast_id, $new){
 	global $wpdb, $fk_settings;
 	$defaults = array('cast_id' => $cast_id,
 		'characters' => fk_cast_get_characters_for($cast_id)
@@ -85,7 +85,7 @@ function fk_edit_cast($cast_id, $new){
  * @param bool $delete_characters (default false) If set to true, deletes characters played by this actor.
  * TODO
  */
-function fk_delete_page_cast($cast_id, $delete_characters = false){
+function fk_cast_delete($cast_id, $delete_characters = false){
 	global $wpdb, $fk_settings;
 	// todo: have option for deleting characters
 	if( $delete_characters === true ){
@@ -100,7 +100,7 @@ function fk_delete_page_cast($cast_id, $delete_characters = false){
 /**
  * Returns array of objects with cast_id and name properties set, ordered alphabetically by first name.
  */
-function fk_get_all_cast(){
+function fk_cast_get_all(){
 	global $wpdb, $fk_settings;
 	$all_cast = $wpdb->get_results($wpdb->prepare("SELECT cast_id, name FROM $fk_settings->cast_table"));
 	return $all_cast;

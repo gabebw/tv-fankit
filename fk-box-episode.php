@@ -125,9 +125,9 @@ function fk_save_page_episode($post_id){
 		$new = array('season' => $season,
 			'ep_num' => $ep_num,
 			'appearances' => $appearances);
-		fk_edit_episode($post_id, $new);
+		fk_episode_edit($post_id, $new);
 	} else {
-		fk_add_episode($post_id, $season, $ep_num, $appearances);
+		fk_episode_add($post_id, $season, $ep_num, $appearances);
 	}
 }
 ?>
