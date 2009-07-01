@@ -125,9 +125,9 @@ function fk_cast_get_characters_for($cast_id){
 add_action('wp_ajax_fk_ajax_get_episodes', 'wp_ajax_fk_ajax_get_episodes');
 function fk_ajax_get_episodes(){
 	if( ! function_exists('json_encode') ){
-		require( WP_CONTENT_URL . plugin_basename(__FILE__) . '/php-json/json.php');
+		require_once(ABSPATH.'/wp-includes/js/tinymce/plugins/spellchecker/classes/utils/JSON.php');
 		function json_encode($obj){
-			$json = new Services_JSON();
+			$json = new Moxiecode_JSON();
 			return $json->encode($obj);
 		}
 	}
