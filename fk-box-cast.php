@@ -49,16 +49,16 @@ function fk_box_cb_link_cast_to_character(){
 			// TODO:JS accordion (jquery) list of available characters "or manually add character"
 			$id = $character->character_id;
 			$name = $character->name;
-			$permalink = get_permalink($id);
 			$css_id = "character_$id";
 			$selected = '';
 			// TODO:JS javascript autocomplete, with hide-if-js div containing PHP-generated checkboxes
-			if( 0 !== $post->ID && $post->ID === fk_get_actor_who_plays($id) ){
+			if( 0 !== $post->ID && $post->ID === fk_character_get_actor($id) ){
 				$selected = ' checked="checked"';
 			}
 			printf('<input type="checkbox"%1$s name="fk_characters[]" value="%2$d" id="%3$s" />',
 				$selected, $id, $css_id);
-			printf('<label for="%1$s">%2$s</label> (<a href="%3$s">view</a>)<br />', $css_id, $name, $permalink);
+			printf('<label for="%1$s">%2$s</label> (<a href="%3$s">view</a> or <a href="%s">edit</a>)<br />',
+				$css_id, $name, get_permalink($id), get_edit_post_link($id));
 		}
 		echo '</p>';
 	}

@@ -106,7 +106,7 @@ function fk_box_cb_add_actor_for_character(){
 	if( 0 === $post->ID ){
 		$played_by = false;
 	} else {
-		$played_by = fk_get_actor_who_plays($post->ID);
+		$played_by = fk_character_get_actor($post->ID);
 	}
 
 	echo '<p>';
