@@ -7,7 +7,7 @@
 /**
  * Add an episode.
  */
-function fk_episode_add($episode_id, $season, $ep_num){
+function fk_episode_add($episode_id, $season, $ep_num, $characters){
 	global $wpdb, $fk_settings;
 	// Check for nulls because when passed from POST data we don't actually check for sanity before passing in here.
 	$query = $wpdb->prepare("INSERT INTO $fk_settings->episode_table
@@ -19,63 +19,54 @@ function fk_episode_add($episode_id, $season, $ep_num){
 
 /**
  * Updates data for the given episode, if necessary. If episode does not exist, creates it.
- * Takes either array or query-string style arguments.
- * Valid keys (so far):
- * season
- * ep_num
- * appearances (array)
  * @param int $episode_id The post_id of the episode
- * @param array|string $new The new values.
- * @return bool True if episode updated or created successfully, false otherwise.
+ * @param int $new_season The new season
+ * @param int $new_ep_num The new episode number
+ * @param array $new_characters The new array of characters that appear in the episode (this is an array of post ids)
+ * @return bool|WP_Error True if episode updated or created successfully, WP_Error otherwise
  */
-function fk_episode_edit($episode_id, $new){
+function fk_episode_edit($episode_id, $new_season, $new_ep_num, $new_characters){
 	global $wpdb, $fk_settings;
 	if( ! fk_episode_exists($episode_id) ){
-		// Episode does not exist, try to create it.
-		if( isset($new['season'], $new['ep_num']) ){
-			wp_die("Oh no, episode doesn't exist!");
-			fk_episode_add($episode_id, $new['season'], $new['ep_num']);
-			return true;
-		} else {
-			return false;
-		}
+		return new WP_Error('episode_does_not_exist', "Oh no, episode doesn't exist!");
 	}
 	// Page does exist; check values and update as necessary.
 	list($old_season, $old_ep_num) = fk_episode_get_season_ep_num($post_id);
-	$old_appearances = fk_episode_get_characters($post_id);
-	$defaults = array('season' => $old_season,
+	$old_characters = fk_episode_get_characters($post_id);
+	$old = array('season' => $old_season,
 		'ep_num' => $old_ep_num,
-		'appearances' => $old_appearances);
-	$merged = wp_parse_args($new, $defaults);
+		'characters' => $old_characters);
+	$new = array('season' => $new_season,
+		'ep_num' => $new_ep_num,
+		'characters' => $new_characters);
+	// wp_parse_args will overwrite values in $old with $values in $new
+	$merged = wp_parse_args($new, $old);
 	foreach( (array) $merged as $key => $value ){
 		switch($key){
 		case 'season':
 			if( '' !== $value && ! is_numeric($value) ){
 				var_dump($value);
-				wp_die("Episode's season must be a number.");
 				// must be a number or a blank string
-				//wp_error("Episode's season must be a number.");
-				break;
+				return new WP_Error('bad_season', "Episode's season must be a number.");
+			} else {
+				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET season = %d WHERE episode_id = %d", $value, $episode_id));
 			}
-			$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET season = %d WHERE episode_id = %d", $value, $episode_id));
 			break;
 		case 'ep_num':
 			if( '' !== $value && ! is_numeric($value) ){
-				//wp_error("Episode's episode number must be a number.");
-				break;
+				return new WP_Error('bad_ep_num', "Episode's episode number must be a number.");
 			} else {
 				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET ep_num = %d WHERE episode_id = %d", $value, $episode_id));
 			}
 			break;
-		case 'appearances':
-			$new_appearances = $value;
-			// characters in $delete_appearances no longer appear in the current episode.
-			$delete_appearances = array_diff($old_appearances, $new_appearances);
-			foreach( (array) $delete_appearances as $del ){
-				// $del?
-				fk_character_delete_appearance($character_id, $post_id);
+		case 'characters':
+			$new_characters = $value;
+			// characters in $delete_characters no longer appear in the current episode.
+			$delete_characters = array_diff($old_characters, $new_characters);
+			foreach( (array) $delete_characters as $del ){
+				fk_character_delete_appearance($del, $post_id);
 			}
-			foreach( (array) $appearances as $character_id ){
+			foreach( (array) $new_characters as $character_id ){
 				fk_character_add_appearance($character_id, $post_id);
 			}
 			break;
@@ -126,10 +117,10 @@ function fk_episode_get_season_ep_num($episode_id){
 
 function fk_episode_get_characters($episode_id){
 	global $wpdb, $fk_settings;
-	$appearances = $wpdb->get_col(
+	$characters = $wpdb->get_col(
 		$wpdb->prepare("SELECT character_id FROM $fk_settings->appearance_table WHERE episode_id = %d", $episode_id)
 	);
-	return $appearances;
+	return $characters;
 }
 
 /**

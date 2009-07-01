@@ -48,7 +48,7 @@ function _fk_episode_boxes(){
 // Callback for general episode info metabox
 function fk_episode_info_box_cb(){
 	global $post, $fk_settings;
-	list($default_season, $default_ep_num) = fk_get_season_ep_num($post->ID);
+	list($default_season, $default_ep_num) = fk_episode_get_season_ep_num($post->ID);
 	if( $default_season === false || $default_ep_num === false ){
 		$default_season = '';
 		$default_ep_num = '';
@@ -69,7 +69,7 @@ function fk_episode_info_box_cb(){
 		_e("After you've saved this page you can mark characters who appeared in this episode.");
 	} else {
 		$characters = fk_episode_get_appearances($post->ID);
-		$all_characters = fk_get_all_characters(); // sorted by first name
+		$all_characters = fk_character_get_all(); // sorted by first name
 		if( empty($characters) ){
 			_e("<p>No characters have been marked as appearing in this episode.</p>");
 		}
@@ -125,7 +125,7 @@ function fk_save_page_episode($post_id){
 		$new = array('season' => $season,
 			'ep_num' => $ep_num,
 			'appearances' => $appearances);
-		fk_episode_edit($post_id, $new);
+		fk_episode_add($post_id, $season, $ep_num, $appearances);
 	} else {
 		fk_episode_add($post_id, $season, $ep_num, $appearances);
 	}

@@ -181,7 +181,7 @@ function fk_character_add_appearance($character_id, $episode_id){
  * Remove a character from an episode.
  * @return bool False if character did not appear in episode, true otherwise. (I think.)
  */
-function fk_character_remove_appearance($character_id, $episode_id){
+function fk_character_delete_appearance($character_id, $episode_id){
 	global $wpdb, $fk_settings;
 	$return = $wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->appearance_table
 		WHERE character_id = %d AND episode_id = %d",
