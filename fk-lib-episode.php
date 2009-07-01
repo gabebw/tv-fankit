@@ -90,7 +90,8 @@ function fk_episode_get_id($season, $ep_num){
 function fk_episode_delete($episode_id){
 	global $wpdb, $fk_settings;
 	// Delete episode - also deletes appearances by characters.
-	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->episode_table WHERE episode_id = %d",
+	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->episode_table AS ep, $fk_settings->appearances_table AS app ".
+	       	'WHERE ep.episode_id = %d AND app.episode_id = %1$d',
 		$episode_id));
 	return true;
 }
