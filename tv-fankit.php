@@ -33,9 +33,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 if( is_admin() ){
 	// Useful debug functions.
 	require_once('fk-debug.php');
-	// dpr($_POST);
 	// General-purpose functions that all page types use.
 	// This also loads fk-lib-{character,cast,episode}.php
+	require_once('fk-lib.php');
 	require_once('fk-settings.php');
 	require_once('fk-error.php');
 	// (Un)install functions and hooks.
