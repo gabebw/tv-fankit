@@ -23,7 +23,7 @@ if( $fk_settings->completely_uninstall ){
 }
 printf('<input type="checkbox" id="cu-id" name="fk_completely_uninstall"%s /> ',
 	$cu_checked);
-_e('Check this box to "delete" all TV Fan Kit information when TV Fan Kit is deactivated. This <em>will not</em> delete your pages; they will just not have the extra Fan Kit data anymore.');
+_e('Check this box to remove all TV Fan Kit information when TV Fan Kit is deactivated. This <em>will not</em> delete your pages; they will just not have the extra Fan Kit data (characters, seasons, etc.) anymore. If you leave it unchecked (recommended), then TV Fan Kit will keep the information.');
 ?>
 </label>
 </td>
@@ -41,7 +41,7 @@ if( $fk_settings->show_notices ){
 }
 printf('<input type="checkbox" id="sn-id" name="fk_show_notices"%s /> ',
 	$sn_checked);
-_e('Check this box to show helpful getting-started notices when editing pages.');
+_e('Enable helpful getting-started notices when editing pages.');
 ?>
 </label>
 </td>
@@ -54,7 +54,7 @@ _e('Check this box to show helpful getting-started notices when editing pages.')
 <?php
 printf('<input type="checkbox" id="delete-characters-id" name="fk_delete_characters" value="%s"%s /> ',
 	$fk_settings->delete_characters,  $fk_settings->delete_characters ? ' checked = "checked"' : '');
-_e('Check this to "delete" characters when the actor/actress who plays them is deleted. This <em>will not</em> delete the actual Wordpress pages. It will simply remove the TV Fan Kit data for the characters.');
+_e('Check this to delete characters when the actor/actress who plays them is deleted. This <em>will not</em> delete the actual Wordpress pages. It will simply remove the TV Fan Kit data for the characters.');
 ?>
 </label>
 </td>
