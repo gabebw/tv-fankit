@@ -86,7 +86,7 @@ function fk_change_title(){
  * @see _page_row()
  */
 function add_custom_column_hook($defaults) {
-	$defaults['fk_type'] = __('TV FanKit Post Type');
+	$defaults['fk_type'] = __('TV FanKit Page Type');
 	return $defaults;
 }
 

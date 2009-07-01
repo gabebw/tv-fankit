@@ -98,7 +98,7 @@ class FK_settings {
 		$this->pretty_type = array('episode' => __('Episode'),
 			'cast' => __('Cast Member'),
 			'character' => __('Character'),
-			'none' => __('Normal Wordpress Post'));
+			'none' => __('Normal Wordpress Page'));
 
 		$this->completely_uninstall = ( 'on' === get_option('fk_completely_uninstall') );
 		$this->show_notices = ('on' === get_option('fk_show_notices'));

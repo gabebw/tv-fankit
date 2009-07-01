@@ -40,7 +40,7 @@ function fk_edit_episode($episode_id, $new){
 			return false;
 		}
 	}
-	// Post does exist; check values and update as necessary.
+	// Page does exist; check values and update as necessary.
 	list($old_season, $old_ep_num) = fk_get_season_ep_num($post_id);
 	$old_appearances = fk_episode_get_appearances($post_id);
 	$defaults = array('season' => $old_season,

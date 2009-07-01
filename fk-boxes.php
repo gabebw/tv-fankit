@@ -44,15 +44,15 @@ function fk_none_notices(){
 	if( true === $editing ){
 		// Don't show this when we're on the "edit all pages" page
 		$pre_txt = __('This is a normal wordpress page.') . ' ';
-		$post_txt = ' ' . __('You can also change the type of existing pages in the "Set Post Type" box under the writing area.');
+		$post_txt = ' ' . __('You can also change the type of existing pages in the "Set Page Type" box under the writing area.');
 	}
-	$txt = $pre_txt . __('To take advantage of everything that TV Fan Kit offers, try clicking on "Add New Episode", "Add New Cast Member", or "Add New Character" under the Posts menu to the left.') . $page_txt;
+	$txt = $pre_txt . __('To take advantage of everything that TV Fan Kit offers, try clicking on "Add New Episode", "Add New Cast Member", or "Add New Character" under the Pages menu to the left.') . $page_txt;
 	fk_show_basic_notice($txt);
 }
 
 function fk_box_type(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_change_type_id', __("Set Post Type"), 'fk_box_cb_type', 'page', 'normal');
+		add_meta_box('fk_change_type_id', __("Set Page Type"), 'fk_box_cb_type', 'page', 'normal');
 	}
 }
 
@@ -72,7 +72,7 @@ function fk_box_cb_type(){
 		'none' => ($fk_type === 'none') ? $checked : ''
 	);
 	echo '<p>';
-	_e('Select a type and click "Publish" or "Update Post" to change the type of this page. New boxes will appear after you save the new type, so click "Publish" or "Update Post" immediately after changing the type to take advantage of it.');
+	_e('Select a type and click "Publish" or "Update Page" to change the type of this page. New boxes will appear after you save the new type, so click "Publish" or "Update Page" immediately after changing the type to take advantage of it.');
 	echo '<br />';
 	// hide-if-js because user can only drag if JS is enabled.
 	echo '<span class="hide-if-js">';
