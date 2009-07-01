@@ -33,7 +33,7 @@ function fk_edit_episode($episode_id, $new){
 	if( ! fk_episode_exists($episode_id) ){
 		// Episode does not exist, try to create it.
 		if( isset($new['season'], $new['ep_num']) ){
-			wp_die("holy shit, ep doesn't exist!");
+			wp_die("Oh no, episode doesn't exist!");
 			fk_add_episode($episode_id, $new['season'], $new['ep_num']);
 			return true;
 		} else {
@@ -52,7 +52,7 @@ function fk_edit_episode($episode_id, $new){
 		case 'season':
 			if( '' !== $value && ! is_numeric($value) ){
 				var_dump($value);
-				wp_die('whore');
+				wp_die("Episode's season must be a number.");
 				// must be a number or a blank string
 				//wp_error("Episode's season must be a number.");
 				break;
@@ -63,14 +63,16 @@ function fk_edit_episode($episode_id, $new){
 			if( '' !== $value && ! is_numeric($value) ){
 				//wp_error("Episode's episode number must be a number.");
 				break;
+			} else {
+				$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET ep_num = %d WHERE episode_id = %d", $value, $episode_id));
 			}
-			$wpdb->query($wpdb->prepare("UPDATE $fk_settings->episode_table SET ep_num = %d WHERE episode_id = %d", $value, $episode_id));
 			break;
 		case 'appearances':
 			$new_appearances = $value;
 			// characters in $delete_appearances no longer appear in the current episode.
 			$delete_appearances = array_diff($old_appearances, $new_appearances);
 			foreach( (array) $delete_appearances as $del ){
+				// $del?
 				fk_character_delete_appearance_for($character_id, $post_id);
 			}
 			foreach( (array) $appearances as $character_id ){
