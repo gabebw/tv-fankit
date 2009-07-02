@@ -6,15 +6,29 @@
 
 /**
  * Add an episode.
+ * @param int $episode_id Post id of episode page
+ * @param int $season
+ * @param int $ep_num
+ * @param array $characters Array of character_id's that appear in this episode
+ * @return true|WP_Error Returns true on success, WP_Error on failure.
  */
 function fk_episode_add($episode_id, $season, $ep_num, $characters){
 	global $wpdb, $fk_settings;
 	// Check for nulls because when passed from POST data we don't actually check for sanity before passing in here.
-	$query = $wpdb->prepare("INSERT INTO $fk_settings->episode_table
+	// $success is false or an int (number of rows affected)
+	$success = $wpdb->query($wpdb->prepare("INSERT INTO $fk_settings->episode_table
 		( episode_id, season, ep_num )
 		VALUES ( %d, %d, %d )",
-			$episode_id, $season, $ep_num);
-	$wpdb->query($query);
+			$episode_id, $season, $ep_num));
+	if( $success === false ){
+		return new WP_Error('query_failed', 'Failed to add episode');
+	} else {
+		// Now that the episode exists, add the characters
+		foreach( (array) $characters as $character){
+			fk_character_add_appearance($character, $episode_id);
+		}
+	}
+	return true;
 }
 
 /**

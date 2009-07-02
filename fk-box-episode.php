@@ -75,31 +75,32 @@ function fk_episode_characters_box_cb(){
 	wp_nonce_field('fk_set_characters', 'fk_characters_nonce');
 	echo '<p>';
 	if( 0 === $post->ID ){
-		_e("After you've saved this page you can mark characters who appeared in this episode.");
+		// New post so characters can't have been added yet.
+		$characters = array();
 	} else {
 		$characters = fk_episode_get_characters($post->ID);
-		$all_characters = fk_character_get_all(); // sorted by first name
-		if( empty($characters) ){
-			_e("<p>No characters have been marked as appearing in this episode.</p>");
+	}
+	$all_characters = fk_character_get_all(); // sorted by first name
+	if( empty($characters) ){
+		_e("<p>No characters have been marked as appearing in this episode.</p>");
+	}
+	if( empty($all_characters) ){
+		printf(__('<p>No characters have been added. Maybe you want to <a href="%s">add one</a>?</p>'),
+			$fk_settings->new_character_link);
+	} else {
+		echo '<p>';
+		foreach( (array) $all_characters as $ch ){
+			$ch_id = $ch->character_id;
+			// FIXME - characters by letter
+			$current_letter = '';
+			$checked = fk_character_appears_in($ch_id, $post->ID) ? ' checked="checked"' : '';
+			printf('<label><input type="checkbox" name="fk_characters[]" value="%1$s"%2$s /> %3$s</label>',
+				$ch_id, $checked, $ch->name);
+			printf(' (<a href="%s">view</a> or <a href="%s">edit</a>)',
+				get_permalink($ch_id), get_edit_post_link($ch_id));
+			echo '<br />';
 		}
-		if( empty($all_characters) ){
-			printf(__('<p>No characters have been added. Maybe you want to <a href="%s">add one</a>?</p>'),
-				$fk_settings->new_character_link);
-		} else {
-			echo '<p>';
-			foreach( (array) $all_characters as $ch ){
-				$ch_id = $ch->character_id;
-				// FIXME - characters by letter
-				$current_letter = '';
-				$checked = fk_character_appears_in($ch_id, $post->ID) ? ' checked="checked"' : '';
-				printf('<label><input type="checkbox" name="fk_characters[]" value="%1$s"%2$s /> %3$s</label>',
-					$ch_id, $checked, $ch->name);
-				printf(' (<a href="%s">view</a> or <a href="%s">edit</a>)',
-					get_permalink($ch_id), get_edit_post_link($ch_id));
-				echo '<br />';
-			}
-			echo '</p>';
-		}
+		echo '</p>';
 	}
 	echo '</p>';
 }
