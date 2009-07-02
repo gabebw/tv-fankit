@@ -40,10 +40,10 @@ function fk_episode_notices(){
 
 function _fk_episode_boxes(){
 	if( function_exists('add_meta_box')){
-		// Add a box where user specifies the general episode info.
-		add_meta_box('fk_episode_box_season_ep_num_id', __("TV Fan Kit - Episode Season/Episode"), 'fk_episode_season_ep_num_box_cb', 'page', 'normal');
+		// Add a box where user specifies the season and episode number
+		add_meta_box('fk_episode_box_season_ep_num_id', __("TV Fan Kit - Season/Episode Number"), 'fk_episode_season_ep_num_box_cb', 'page', 'normal');
 		// Box for marking which characters appear in this episode
-		add_meta_box('fk_episode_box_characters_id', __("TV Fan Kit - Characters"), 'fk_episode_characters_box_cb', 'page', 'normal');
+		add_meta_box('fk_episode_box_characters_id', __("TV Fan Kit - Characters In This Episode"), 'fk_episode_characters_box_cb', 'page', 'normal');
 		// Add separate box for transcript, since it can be huge and user may want to drag it out of the way.
 		add_meta_box('fk_episode_box_transcript_id', __("TV Fan Kit - Episode Transcript"), 'fk_episode_transcript_box_cb', 'page', 'normal');
 	}
