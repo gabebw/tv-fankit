@@ -169,7 +169,7 @@ function fk_delete_page($post_id){
 		$post_id = $real_page_id;
 	}
 
-	//call_user_func('fk_delete_page_'.$fk_settings->type, $post_id);
+	call_user_func('fk_delete_page_'.$fk_settings->type, $post_id);
 	fk_delete_meta_all($post_id);
 }
 ?>
