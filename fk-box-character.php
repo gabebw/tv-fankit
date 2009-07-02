@@ -144,4 +144,8 @@ function fk_save_page_character($post_id){
 	}
 	return true;
 }
+
+function fk_delete_page_character($post_id){
+	fk_character_delete($post_id);
+}
 ?>

@@ -137,4 +137,8 @@ function fk_save_page_episode($post_id){
 		fk_episode_add($post_id, $season, $ep_num, $characters);
 	}
 }
+
+function fk_delete_page_episode($post_id){
+	fk_episode_delete($post_id);
+}
 ?>

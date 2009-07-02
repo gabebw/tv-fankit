@@ -72,4 +72,8 @@ function fk_save_page_cast($page_id){
 	$characters = $_POST['fk_characters']; // array(32, 9, 10)
 	fk_cast_add($page_id, $characters);
 }
+
+function fk_delete_page_cast($post_id){
+	fk_cast_delete($post_id);
+}
 ?>
