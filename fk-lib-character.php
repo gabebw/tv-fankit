@@ -45,9 +45,13 @@ function fk_character_add($character_id, $cast_id = null, $appearances=array()){
  */
 function fk_character_delete($character_id){
 	global $wpdb, $fk_settings;
-	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->character_table AS ch, $fk_settings->cast2character_table AS cc,
-		$fk_settings->appearance_table AS app WHERE ch.character_id = %d AND cc.character_id = %d AND app.character_id = %d ",
-		$character_id, $character_id, $character_id));
+	// Use three queries because it's not guaranteed to to be in all 3, and JOINs get complicated.
+	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->character_table WHERE character_id = %d",
+		$character_id));
+	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->cast2character_table WHERE character_id = %d",
+		$character_id));
+	$wpdb->query($wpdb->prepare("DELETE FROM $fk_settings->appearance_table WHERE character_id = %d",
+		$character_id));
 }
 
 /**
@@ -75,11 +79,9 @@ function fk_character_edit($character_id, $new_cast, $new_appearances){
 			$to_delete = array_diff($defaults['appearances'], $value);
 			// Add episodes that are only in $value (ie have not yet been added)
 			$to_add = array_diff($value, $defaults['appearances']);
-			// add
 			foreach( $to_add as $episode_id ){
 				fk_character_add_appearance($character_id, $episode_id);
 			}
-			// delete
 			foreach( $to_delete as $episode_id ){
 				fk_character_delete_appearance($character_id, $episode_id);
 			}
