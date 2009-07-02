@@ -45,7 +45,7 @@ function fk_character_notices(){
  */
 function fk_box_add_character_appearances(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_episode_id', __("TV Fan Kit - Appearances"), 'fk_box_cb_character_appearances', 'page', 'normal');
+		add_meta_box('fk_episode_id', __("TV Fan Kit - Episode Appearances"), 'fk_box_cb_character_appearances', 'page', 'normal');
 	}
 }
 
