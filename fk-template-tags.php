@@ -7,9 +7,6 @@
  */
 function the_character_appearances(){
 	global $fk_settings;
-	if( $fk_settings->type !== 'character' ){
-		return;
-	}
 	echo get_the_title() . ' appears in the following episodes:<br />';
 	echo '<ul>';
 	$appearances = fk_character_get_appearances(get_the_ID());
