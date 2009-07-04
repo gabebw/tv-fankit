@@ -23,8 +23,6 @@ function fk_admin_scripts(){
 		return;
 	}
 	fk_admin_register_scripts();
-	// which page actually requires this?
-	wp_enqueue_script('jquery-ui-accordion');
 	// TODO:JS
 	if( $fk_settings->type === 'episode' ){
 		global $post;
@@ -55,9 +53,8 @@ function fk_admin_register_scripts(){
 	wp_register_script('bgiframe', $fk_plugin_url . 'js/bgiframe/bgiframe.minified.js', array('jquery'), '2.1.1');
 	// Script to list episodes so user can mark appearances of a character. Requires "interface" for accordion effect.
 	wp_register_script('fk-mark-appearances', $fk_plugin_url . 'js/fk-mark-appearances.js', array('interface', 'jquery-suggest'), '1');
-	wp_register_script('global-load', $fk_plugin_url . 'js/global_load-jquery.js', array('jquery'), '1.0');
 	// will this fail hard when used with 1.2.6?
-	wp_register_script('fk-quote-editor', $fk_plugin_url . 'js/quoteEditor-jquery.class.js', array('jquery', 'jquery-color', 'global-load'), '1.0');
+	wp_register_script('fk-quote-editor', $fk_plugin_url . 'js/quoteEditor-jquery.class.js', array('jquery', 'jquery-color'), '1.0');
 }
 
 /**
