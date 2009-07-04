@@ -6,6 +6,9 @@
  * Includes the correct page template based on post type
  */
 function fk_type_post() {
+	if( ! is_single() ){
+		return;
+	}
 	global $fk_settings;
 	switch($fk_settings->type){
 	case "none":
