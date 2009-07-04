@@ -144,8 +144,14 @@ class FK_settings {
 	 * @return string
 	 */
 	function get_current_type(){
+		global $post;
 		$my_fk_type = 'none';
-		if( isset($_GET['post']) ){
+		if( ! is_null($post) && $post->ID !== 0 ){
+			// In admin area, FK_settings is instantiated before $post is set,
+			// so we check if it's null.
+			// However, we keep this block for use in themes, when $post is set.
+			$temp_type = fk_get_meta($post->ID, 'type');
+		} elseif( isset($_GET['post']) ){
 			$page_id = $_GET['post'];
 			$temp_type = fk_get_meta($page_id, 'type');
 		} elseif( isset($_GET['fk_type']) ){
@@ -157,6 +163,10 @@ class FK_settings {
 		}
 		return $my_fk_type;
 	}
+	
+	function set_current_type(){
+		$this->type = $this->get_current_type();
+	}
 }
 
 /**
@@ -164,4 +174,7 @@ class FK_settings {
  */
 global $fk_settings;
 $fk_settings = new FK_settings();
+// This sets $fk_settings->type in time for the theme. It's the earliest
+// action where $post is set.
+add_action('template_redirect', array($fk_settings, 'set_current_type'));
 ?>
