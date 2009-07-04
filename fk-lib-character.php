@@ -123,11 +123,15 @@ function fk_character_get_appearances($character_id){
 
 /**
  * Get the actor who plays the character indicated by the id.
- * @param int $id The character_id of the character.
+ * @param int $character_id The character_id of the character.
  * @returns int|bool $id Returns character_id of actor who plays the character, or false if character has no assigned actor.
  */
 function fk_character_get_actor($character_id){
 	global $wpdb, $fk_settings;
+	if( $character_id === 0 ){
+		// Trying to get actor from an unsaved post.
+		return false;
+	}
 	$cast_id = $wpdb->get_var($wpdb->prepare("SELECT cast_id FROM $fk_settings->cast2character_table WHERE character_id =%d",
 		$character_id));
 	if( is_null($cast_id) ){
