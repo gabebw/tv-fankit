@@ -6,16 +6,22 @@
  * Shows list of episodes this character has appeared in
  */
 function the_character_appearances(){
+	echo get_the_character_appearances();
+}
+
+function get_the_character_appearances(){
 	global $fk_settings;
-	echo get_the_title() . ' appears in the following episodes:<br />';
-	echo '<ul>';
+	$app_str = '';
+	$app_str .= get_the_title() . ' appears in the following episodes:<br />';
+	$app_str .= '<ul>';
 	$appearances = fk_character_get_appearances(get_the_ID());
 	foreach($appearances as $ep_id){
 		list($season, $ep_num) = fk_episode_get_season_ep_num($ep_id);
-		printf('<li><a href="%s">%s</a> (%dx%d)</li>',
+		$app_str .= sprintf('<li><a href="%s">%s</a> (%dx%d)</li>',
 			get_permalink($ep_id), get_the_title($ep_id), $season, $ep_num);
 	}
-	echo '</ul>';
+	$app_str .= '</ul>';
+	return $app_str;
 }
 
 /**
@@ -65,20 +71,29 @@ function get_the_actor($character_id = 0){
  * Prints the season and episode number
  */
 function the_season_ep_num(){
-	echo '<p>';
+	echo get_the_season_ep_num();
+}
+
+function get_the_season_ep_num(){
+	$str = '<p>';
 	list($season, $ep_num) = fk_episode_get_season_ep_num(get_the_ID());
-	print("Season: $season<br />");
-	print("Episode Number: $ep_num");
-	echo '</p>';
+	$str .= "Season: $season<br />";
+	$str .= "Episode Number: $ep_num";
+	$str .= '</p>';
+	return $str;
 }
 
 /**
  * List of characters who appear in this episode
  */
 function the_episode_characters(){
+	echo get_the_episode_characters();
+}
+
+function get_the_episode_characters(){
 	$characters = fk_episode_get_characters(get_the_ID());
-	echo 'The following characters appear in this episode:<br />';
-	echo '<ul>';
+	$ch_str = 'The following characters appear in this episode:<br />';
+	$ch_str .= '<ul>';
 	foreach($characters as $ch_id){
 		$actor_id = fk_character_get_actor($ch_id);
 		if( $actor_id === false ){
@@ -87,8 +102,9 @@ function the_episode_characters(){
 			$played_by = sprintf(' (played by <a href="%s">%s</a>)',
 				get_permalink($actor_id), get_the_title($actor_id));
 		}
-		printf('<li><a href="%s">%s</a>%s</li>',
+		$ch_str .= sprintf('<li><a href="%s">%s</a>%s</li>',
 			get_permalink($ch_id), get_the_title($ch_id), $played_by);
 	}
-	echo '</ul>';
+	$ch_str .= '</ul>';
+	return $ch_str;
 }
