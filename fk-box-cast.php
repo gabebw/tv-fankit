@@ -13,7 +13,7 @@ function fk_add_cast_boxes(){
 }
 
 function fk_cast_notices(){
-	$txt = __("The page title is the actor or actress's name, and the page content is a description of them. To add characters that this character has played or other information, check out the boxes below the writing area.");
+	$txt = __("The post title is the actor or actress's name, and the post content is a description of them. To add characters that this character has played or other information, check out the boxes below the writing area.");
 	fk_show_basic_notice($txt);
 }
 
@@ -22,7 +22,7 @@ function fk_cast_notices(){
  */
 function fk_box_link_cast_to_character(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_character_name_id', __("Add Characters Played By This Actor/Actress"), 'fk_box_cb_link_cast_to_character', 'page', 'normal');
+		add_meta_box('fk_character_name_id', __("Add Characters Played By This Actor/Actress"), 'fk_box_cb_link_cast_to_character', 'post', 'normal');
 	} else {
 		// FIXME
 	}
@@ -33,18 +33,18 @@ function fk_box_link_cast_to_character(){
  */
 function fk_box_cb_link_cast_to_character(){
 	global $fk_settings, $post;
-	$all_character_pages = fk_character_get_all();
+	$all_character_posts = fk_character_get_all();
 
 	// Use nonce for verification
 	wp_nonce_field('fk_set_character_name', 'fk_set_character_name_nonce');
-	echo '<p>' . __('Note: if a character is not listed, you can <a href="'.$fk_settings->new_character_link.'">add it</a> then come back to this page.') . '</p>';
+	echo '<p>' . __('Note: if a character is not listed, you can <a href="'.$fk_settings->new_character_link.'">add it</a> then come back to this post.') . '</p>';
 	// FIXME: i think a table would work well - that way we only have to write the header text ("All" etc) once, plus probs easier to parse for user
 	echo '<p>';
-	if( empty($all_character_pages) ){
+	if( empty($all_character_posts) ){
 		printf(__('No characters exist. Maybe you want to <a href="%s">add one</a>?'),
 			$fk_settings->new_character_link);
 	} else {
-		foreach( (array) $all_character_pages as $character ){
+		foreach( (array) $all_character_posts as $character ){
 			// TODO: Sort by name
 			// TODO:JS accordion (jquery) list of available characters "or manually add character"
 			$id = $character->character_id;
@@ -67,7 +67,7 @@ function fk_box_cb_link_cast_to_character(){
 	}
 }
 
-function fk_save_page_cast($page_id){
+function fk_save_post_cast($page_id){
 	if( $_POST['action'] === 'inline-save' ){
 		return;
 	}
@@ -76,7 +76,7 @@ function fk_save_page_cast($page_id){
 	fk_cast_add($page_id, $characters);
 }
 
-function fk_delete_page_cast($post_id){
-	fk_cast_delete($post_id);
+function fk_delete_post_cast($page_id){
+	fk_cast_delete($page_id);
 }
 ?>

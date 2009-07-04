@@ -14,8 +14,8 @@ add_action('admin_head', 'fk_change_title');
 add_action('wp_print_scripts', 'fk_admin_scripts');
 add_action('wp_print_styles', 'fk_admin_css');
 // Many thanks to http://scompt.com/archives/2007/10/20/adding-custom-columns-to-the-wordpress-manage-posts-screen
-add_filter('manage_pages_columns', 'add_custom_column_hook');
-add_action('manage_pages_custom_column', 'fill_custom_column', 10, 2);
+add_filter('manage_posts_columns', 'add_custom_column_hook');
+add_action('manage_posts_custom_column', 'fill_custom_column', 10, 2);
 $fk_plugin_url = trailingslashit( WP_PLUGIN_URL . '/' . dirname( plugin_basename(__FILE__) ) );
 
 /**
@@ -65,25 +65,25 @@ function fk_admin_register_scripts(){
  */
 function fk_generate_menu(){
 	global $fk_settings;
-	add_pages_page(__('Add New Episode'), __('Add New Episode'), 'edit_pages', $fk_settings->new_episode_link);
-	add_pages_page(__('Add New Cast Member'), __('Add New Cast Member'), 'edit_pages', $fk_settings->new_cast_link);
-	add_pages_page(__('Add New Character'), __('Add New Character'), 'edit_pages', $fk_settings->new_character_link);
-	add_options_page(__('TV Fan Kit Options'), __('TV Fan Kit'), 'edit_pages', $fk_settings->plugin_path . 'fk-options-page.php');
+	add_posts_page(__('Add New Episode'), __('Add New Episode'), 'edit_posts', $fk_settings->new_episode_link);
+	add_posts_page(__('Add New Cast Member'), __('Add New Cast Member'), 'edit_posts', $fk_settings->new_cast_link);
+	add_posts_page(__('Add New Character'), __('Add New Character'), 'edit_posts', $fk_settings->new_character_link);
+	add_options_page(__('TV Fan Kit Options'), __('TV Fan Kit'), 'edit_posts', $fk_settings->plugin_path . 'fk-options-page.php');
 
 }
 
 function fk_change_title(){
 	global $editing, $fk_settings, $action, $title;
-	if( ! $editing // only change title if we're editing (eg not just looking at list of pages) - this is only set in post/page context
+	if( ! $editing // only change title if we're editing (eg not just looking at list of posts) - this is only set in post/page context
 	    || $fk_settings->type === 'none' // don't change title for normal pages
-	    || ! $fk_settings->on_page_page ){ // Only change title for pages.
+	    || ! $fk_settings->on_post_page ){ // Only change title for posts.
 		return false;
 	}
 	
 	if( $action === 'edit' ){
-		$prefix = _c('Edit|page');
+		$prefix = _c('Edit|post');
 	} else {
-		$prefix = _c('Add New|page');
+		$prefix = _c('Add New|post');
 	}
 	$title = "$prefix " . $fk_settings->get_pretty_type($fk_settings->type);
 }
@@ -94,17 +94,17 @@ function fk_change_title(){
  * @see _page_row()
  */
 function add_custom_column_hook($defaults) {
-	$defaults['fk_type'] = __('TV Fan Kit Page Type');
+	$defaults['fk_type'] = __('TV Fan Kit Post Type');
 	return $defaults;
 }
 
 /**
  * Provides the content for our custom column.
  */
-function fill_custom_column($column_name, $page_id){
+function fill_custom_column($column_name, $post_id){
 	global $fk_settings;
 	if( $column_name === 'fk_type' ) {
-		$type = fk_get_page_type($page_id);
+		$type = fk_get_post_type($post_id);
 		$pretty_type = $fk_settings->get_pretty_type($type);
 		echo $pretty_type;
 	}

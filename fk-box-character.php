@@ -1,6 +1,6 @@
 <?php
 /**
- * Add metaboxes for an character page.
+ * Add metaboxes for an character post.
  * @package FanKit
  */
 
@@ -36,7 +36,7 @@ function fk_character_notices(){
 	} else {
 		$pre_character_txt = __("You are editing a character.");
 	}
-	$txt = $pre_character_txt . ' ' . __("The page title is the character's name, and the page content is a description of this character. To mark which actor or actress plays this character, which episodes this character appears in, and more, see the boxes below.");
+	$txt = $pre_character_txt . ' ' . __("The post title is the character's name, and the post content is a description of this character. To mark which actor or actress plays this character, which episodes this character appears in, and more, see the boxes below.");
 	fk_show_basic_notice($txt);
 }
 
@@ -45,7 +45,7 @@ function fk_character_notices(){
  */
 function fk_box_add_character_appearances(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_episode_id', __("TV Fan Kit - Episode Appearances"), 'fk_box_cb_character_appearances', 'page', 'normal');
+		add_meta_box('fk_episode_id', __("TV Fan Kit - Episode Appearances"), 'fk_box_cb_character_appearances', 'post', 'normal');
 	}
 }
 
@@ -91,7 +91,7 @@ function fk_box_cb_character_appearances(){
 
 function fk_box_add_actor_for_character(){
 	if( function_exists( 'add_meta_box' )){
-		add_meta_box('fk_character_actor_id', __("Mark the Actor/Actress Who Plays This Character"), 'fk_box_cb_add_actor_for_character', 'page', 'normal');
+		add_meta_box('fk_character_actor_id', __("Mark the Actor/Actress Who Plays This Character"), 'fk_box_cb_add_actor_for_character', 'post', 'normal');
 	} else {
 		// FIXME
 	}
@@ -114,7 +114,7 @@ function fk_box_cb_add_actor_for_character(){
 		_e("After you've added a cast member, you can come back here and mark which actor or actress plays this character.");
 	} else {
 		foreach( (array) $all_cast as $cm ){
-			$id = $cm->cast_id;
+			$id = (int)$cm->cast_id;
 			$css_id = "actor-$id"; // "actor-21"
 			$checked = ($played_by === $id) ? ' checked="checked"' : '';
 			echo "<label for=\"$css_id\">";
@@ -129,7 +129,7 @@ function fk_box_cb_add_actor_for_character(){
 	echo '</p>';
 }
 
-function fk_save_page_character($post_id){
+function fk_save_post_character($post_id){
 	if( $_POST['action'] === 'inline-save' ){
 		return;
 	}
@@ -146,7 +146,7 @@ function fk_save_page_character($post_id){
 	return true;
 }
 
-function fk_delete_page_character($post_id){
+function fk_delete_post_character($post_id){
 	fk_character_delete($post_id);
 }
 ?>

@@ -5,8 +5,8 @@
  */
 
 /**
- * Add a cast member. Note that the character's name is the name of the Wordpress page corresponding to $cast_id.
- * @param int $cast_id  the page id corresponding to the wordpress page that holds the character.
+ * Add a cast member. Note that the character's name is the name of the Wordpress post corresponding to $cast_id.
+ * @param int $cast_id  the post id corresponding to the wordpress post that holds the character.
  * @param array $characters (Optional) An array of characters played by this actor. 
  */
 function fk_cast_add($cast_id, $characters=array()){
@@ -35,8 +35,8 @@ function fk_cast_add($cast_id, $characters=array()){
  * characters	(array) Set the characters played by this castmember. Adds/subtracts as necessary.
  * ...that's it so far.
  * @param int $cast_id
- * @param array $new Specify only the parameters you wish to change. You can use query-string syntax like in get_pages.
- * @see get_pages()
+ * @param array $new Specify only the parameters you wish to change. You can use query-string syntax like in get_posts.
+ * @see get_posts()
  */
 function fk_cast_edit($cast_id, $new){
 	global $wpdb, $fk_settings;
@@ -120,7 +120,7 @@ function fk_cast_get_characters_for($cast_id){
 
 // AJAX
 /**
- * Returns JSON-encoded array of page ids for episodes.
+ * Returns JSON-encoded array of post ids for episodes.
  */
 add_action('wp_ajax_fk_ajax_get_episodes', 'wp_ajax_fk_ajax_get_episodes');
 function fk_ajax_get_episodes(){
@@ -131,7 +131,7 @@ function fk_ajax_get_episodes(){
 			return $json->encode($obj);
 		}
 	}
-	$episodes = get_pages('meta_key=_fk_type&meta_value=episode');
+	$episodes = get_posts('meta_key=_fk_type&meta_value=episode');
 	print_r($episodes);
 }
 ?>

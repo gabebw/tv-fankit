@@ -19,26 +19,26 @@ function fk_get_nicename($name){
 }
 
 /**
- * Set a meta value for a page; automatically namespaced.
+ * Set a meta value for a post; automatically namespaced.
  * Prefixed with a '_' so it doesn't show up as a user-editable
- * field in the edit page page.
+ * field in the edit post page.
  */
-function fk_set_meta($page_id, $key, $value){
-	if( ! update_post_meta($page_id, '_fk_' . $key, $value) ){
-		add_post_meta($page_id, '_fk_' . $key, $value);
+function fk_set_meta($post_id, $key, $value){
+	if( ! update_post_meta($post_id, '_fk_' . $key, $value) ){
+		add_post_meta($post_id, '_fk_' . $key, $value);
 	}
 	return true;
 }
 
 /**
- * Get a fankit-set meta value for a page.
- * @param int $page_id the id of the page to get meta info from
+ * Get a fankit-set meta value for a post.
+ * @param int $post_id the id of the post to get meta info from
  * @param string $key the meta key to retrieve (automatically namespaced)
  * @param bool $single Whether to retrieve value as single value. Behaves exactly the same as third param of get_post_meta.
  * @return mixed Returns false if value not set, or value if key is set.
  */
-function fk_get_meta($page_id, $key, $single = true){
-	$val = get_post_meta($page_id, '_fk_' . $key, $single);
+function fk_get_meta($post_id, $key, $single = true){
+	$val = get_post_meta($post_id, '_fk_' . $key, $single);
 	if( $val === '' ){
 		// Not set.
 		return false;
@@ -48,15 +48,15 @@ function fk_get_meta($page_id, $key, $single = true){
 }
 
 /**
- * Retrieve all FanKit-related metadata for a page, i.e. metakeys beginning with "_fk_".
+ * Retrieve all FanKit-related metadata for a post, i.e. metakeys beginning with "_fk_".
  * As far as I know, this "namespace" is not used by any other plugins.
  *
- * @param int $page_id The id of the page to get meta info for.
+ * @param int $post_id The id of the post to get meta info for.
  * @return array Array of non-namespaced metadata (eg if key is '_fk_foo', it's in the array as 'foo'). This allows for use of fk_blah_meta functions on the returned array.
  */
-function fk_get_meta_all($page_id){
+function fk_get_meta_all($post_id){
 	$fk_meta = array();
-	$custom = get_post_custom($page_id);
+	$custom = get_post_custom($post_id);
 	if( empty($custom) ){
 		return $fk_meta;
 	}
@@ -70,25 +70,25 @@ function fk_get_meta_all($page_id){
 	return $fk_meta;
 }
 
-function fk_delete_meta($page_id, $key){
-	delete_post_meta($page_id, '_fk_'. $key);
+function fk_delete_meta($post_id, $key){
+	delete_post_meta($post_id, '_fk_'. $key);
 }
 
-function fk_delete_meta_all($page_id){
-	$metas = fk_get_meta_all($page_id);
+function fk_delete_meta_all($post_id){
+	$metas = fk_get_meta_all($post_id);
 	foreach( $metas as $key => $val ){
-		fk_delete_meta($page_id, $key);
+		fk_delete_meta($post_id, $key);
 	}
 }
 
 /**
- * Get the type (episode/cast/character) of a page. Not using the
+ * Get the type (episode/cast/character) of a post. Not using the
  * general-purpose function because this does additional validation.
  * @return mixed Returns string if valid type, false if type is unset or invalid
  */
-function fk_get_page_type($page_id){
+function fk_get_post_type($post_id){
 	global $fk_settings;
-	$type = fk_get_meta($page_id, 'type');
+	$type = fk_get_meta($post_id, 'type');
 	if($fk_settings->is_valid_type($type) ){
 		return $type;
 	} else {

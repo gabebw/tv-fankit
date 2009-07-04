@@ -202,7 +202,7 @@ function fk_character_delete_appearance($character_id, $episode_id){
 
 /**
  * Get all characters.
- * @return array Returns an array of objects with character_id and name variables. Returns empty array if no character pages exist.
+ * @return array Returns an array of objects with character_id and name variables. Returns empty array if no character posts exist.
  */
 function fk_character_get_all(){
 	global $wpdb, $fk_settings;

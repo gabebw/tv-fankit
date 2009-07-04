@@ -6,7 +6,7 @@
 
 /**
  * Add an episode.
- * @param int $episode_id Post id of episode page
+ * @param int $episode_id Post id of episode post
  * @param int $season
  * @param int $ep_num
  * @param array $characters Array of character_id's that appear in this episode
@@ -114,13 +114,13 @@ function fk_episode_delete($episode_id){
  * Returns 2-element array of season and ep_num.
  * Returns array(false, false) if episode_id does not correspond to an episode.
  * 
- * @param int $episode_id the id of the page.
+ * @param int $episode_id the id of the post.
  * @return array 2-element array($season, $ep_num). Usually we use list() on the return value of this function.
  */
 function fk_episode_get_season_ep_num($episode_id){
 	global $wpdb, $fk_settings;
 	$bad = array(false, false);
-	if( fk_get_page_type($episode_id) !== 'episode' ){
+	if( fk_get_post_type($episode_id) !== 'episode' ){
 		return $bad;
 	}
 	$season_ep_num_array = $wpdb->get_row($wpdb->prepare("SELECT season, ep_num FROM $fk_settings->episode_table WHERE episode_id=%d", $episode_id), ARRAY_N);
@@ -140,7 +140,7 @@ function fk_episode_get_characters($episode_id){
 
 /**
  * Get all episodes, arranged by season and episode number.
- * @return array Returns an array of objects with episode_id, season, and ep_num variables. Returns empty array if no episode pages exist.
+ * @return array Returns an array of objects with episode_id, season, and ep_num variables. Returns empty array if no episode posts exist.
  */
 function fk_episode_get_all(){
 	global $wpdb, $fk_settings;

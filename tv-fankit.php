@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // Useful debug functions.
 require_once('fk-debug.php');
-// General-purpose functions that all page types use.
+// General-purpose functions that all post types use.
 // This also loads fk-lib-{character,cast,episode}.php
 require_once('fk-lib.php');
 require_once('fk-settings.php');
@@ -50,9 +50,9 @@ if( is_admin() ){
 	require_once('fk-admin-menu.php');
 	// Callbacks for scripts
 	require_once('fk-callbacks.php');
-	if( $fk_settings->on_page_page ){
+	if( $fk_settings->on_post_page ){
 		// fk-boxes.php loads each type's box file as well
-		require_once('fk-boxes.php'); // Add extra data to the page
+		require_once('fk-boxes.php'); // Add extra data to the post 
 	}
 }
 

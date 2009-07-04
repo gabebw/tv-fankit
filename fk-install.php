@@ -59,9 +59,9 @@ function fk_uninstall(){
 			$fk_settings->cast2character_table);
 		$tables = implode(',', $tables_arr);
 		$wpdb->query("DROP TABLE IF EXISTS $tables");
-		// Get all pages. -1 means no limit.
-		$all_pages = get_pages(array('numberposts' => -1));
-		foreach( (array) $all_pages as $p ){
+		// Get all posts. -1 means no limit.
+		$all_posts = get_posts(array('numberposts' => -1));
+		foreach( (array) $all_posts as $p ){
 			fk_delete_meta_all($p->ID);
 		}
 	}

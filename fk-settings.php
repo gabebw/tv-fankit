@@ -59,7 +59,7 @@ class FK_settings {
 	var $completely_uninstall;
 
 	/**
-	 * @var bool Determines whether to show helpful (hopefully :) getting-started notices on page editing screen.
+	 * @var bool Determines whether to show helpful (hopefully :) getting-started notices on post editing screen.
 	 */
 	var $show_notices;
 
@@ -106,9 +106,9 @@ class FK_settings {
 		$this->on_post_page = in_array($pagenow, array('post-new.php', 'post.php', 'edit.php'));
 		$this->on_page_page = in_array($pagenow, array('page-new.php', 'page.php', 'edit-pages.php'));
 
-		$this->new_cast_link = 'page-new.php?fk_type=cast';
-		$this->new_character_link = 'page-new.php?fk_type=character';
-		$this->new_episode_link = 'page-new.php?fk_type=episode';
+		$this->new_cast_link = 'post-new.php?fk_type=cast';
+		$this->new_character_link = 'post-new.php?fk_type=character';
+		$this->new_episode_link = 'post-new.php?fk_type=episode';
 	}
 
 	/**
@@ -152,8 +152,8 @@ class FK_settings {
 			// However, we keep this block for use in themes, when $post is set.
 			$temp_type = fk_get_meta($post->ID, 'type');
 		} elseif( isset($_GET['post']) ){
-			$page_id = $_GET['post'];
-			$temp_type = fk_get_meta($page_id, 'type');
+			$post_id = $_GET['post'];
+			$temp_type = fk_get_meta($post_id, 'type');
 		} elseif( isset($_GET['fk_type']) ){
 			$temp_type  = $_GET['fk_type'];
 		}
