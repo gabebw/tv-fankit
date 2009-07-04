@@ -30,13 +30,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+// Useful debug functions.
+require_once('fk-debug.php');
+// General-purpose functions that all page types use.
+// This also loads fk-lib-{character,cast,episode}.php
+require_once('fk-lib.php');
+require_once('fk-settings.php');
+// Theme functions
+require_once('fk-theme.php');
+
 if( is_admin() ){
-	// Useful debug functions.
-	require_once('fk-debug.php');
-	// General-purpose functions that all page types use.
-	// This also loads fk-lib-{character,cast,episode}.php
-	require_once('fk-lib.php');
-	require_once('fk-settings.php');
 	require_once('fk-error.php');
 	// (Un)install functions and hooks.
 	require_once('fk-install.php');
@@ -48,8 +51,9 @@ if( is_admin() ){
 		// fk-boxes.php loads each type's box file as well
 		require_once('fk-boxes.php'); // Add extra data to the page
 	}
-	// For translation. TODO: sed the __,_e,_c, etc.
-	load_plugin_textdomain('fankit', $fk_settings->plugin_path, plugin_basename(__FILE__));
 }
+
+// For translation. TODO: sed the __,_e,_c, etc.
+load_plugin_textdomain('fankit', $fk_settings->plugin_path, plugin_basename(__FILE__));
 
 ?>
