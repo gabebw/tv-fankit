@@ -21,6 +21,48 @@ function the_character_appearances(){
 	echo '</ul>';
 }
 
+/**
+ * Prints the actor who plays a character given by $character_id. Defaults to current post.
+ * @param $character_id The post id of the character.
+ */
+function the_actor($character_id = 0){
+	echo get_the_actor($character_id);
+}
+
+/**
+ * Prints a link to the post with the actor who plays a character given by $character_id. Defaults to current post.
+ * @param $character_id The post id of the character.
+ */
+function the_actor_link($character_id = 0){
+	echo get_the_actor_link($character_id);
+}
+
+function get_the_actor_link($character_id = 0){
+	global $post;
+	if( $character_id === 0 ){
+		$character_id = get_the_ID();
+	}
+	$actor_id = fk_character_get_actor($character_id);
+	$actor = get_the_title($actor_id);
+	return sprintf('<a href="%s">%s</a>',
+		get_permalink($actor_id), $actor);
+}
+
+/**
+ * Gets the actor who plays a character given by $character_id. Does not print. Defaults to current post.
+ * @param $character_id The post id of the character.
+ */
+function get_the_actor($character_id = 0){
+	global $post;
+	if( $character_id === 0 ){
+		$character_id = get_the_ID();
+	}
+	$actor_id = fk_character_get_actor($character_id);
+	$actor = get_the_title($actor_id);
+	return $actor;
+}
+
+
 /**** EPISODE TAGS  ****/
 /**
  * Prints the season and episode number
@@ -38,7 +80,7 @@ function the_season_ep_num(){
  */
 function the_episode_characters(){
 	$characters = fk_episode_get_characters(get_the_ID());
-	echo 'The following characters appear in this episode<br />';
+	echo 'The following characters appear in this episode:<br />';
 	echo '<ul>';
 	foreach($characters as $ch_id){
 		$actor_id = fk_character_get_actor($ch_id);
