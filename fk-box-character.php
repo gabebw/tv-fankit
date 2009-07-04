@@ -120,7 +120,8 @@ function fk_box_cb_add_actor_for_character(){
 			echo "<label for=\"$css_id\">";
 			printf('<input id="%1$s" type="radio"%2$s name="fk_cast" value="%3$d" />',
 				$css_id, $checked, $id);
-			printf('%s</label> (<a href="%s">view</a>) or <a href="%s">edit</a>)',
+			printf('%s</label> (<a href="%s">'.__('view').'</a>) '.
+				__('or') . '<a href="%s">'.__('edit').'</a>)',
 				$cm->name, get_permalink($id), get_edit_post_link($ep->episode_id));
 			echo '<br />';
 		}

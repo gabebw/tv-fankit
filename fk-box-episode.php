@@ -96,7 +96,8 @@ function fk_episode_characters_box_cb(){
 			$checked = fk_character_appears_in($ch_id, $post->ID) ? ' checked="checked"' : '';
 			printf('<label><input type="checkbox" name="fk_characters[]" value="%1$s"%2$s /> %3$s</label>',
 				$ch_id, $checked, $ch->name);
-			printf(' (<a href="%s">view</a> or <a href="%s">edit</a>)',
+			printf(' (<a href="%s">'.__('view').'</a> '.__('or').
+				' <a href="%s">'.__('edit').'</a>)',
 				get_permalink($ch_id), get_edit_post_link($ch_id));
 			echo '<br />';
 		}
