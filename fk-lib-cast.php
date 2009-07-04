@@ -35,34 +35,26 @@ function fk_cast_add($cast_id, $characters=array()){
  * characters	(array) Set the characters played by this castmember. Adds/subtracts as necessary.
  * ...that's it so far.
  * @param int $cast_id
- * @param array $new Specify only the parameters you wish to change. You can use query-string syntax like in get_posts.
- * @see get_posts()
+ * @param array $characters Array of character post IDs that this cast member plays.
  */
-function fk_cast_edit($cast_id, $new){
+function fk_cast_edit($cast_id, $characters){
 	global $wpdb, $fk_settings;
-	$defaults = array('cast_id' => $cast_id,
+	$defaults = array(
+		'name' => get_the_title($cast_id),
 		'characters' => fk_cast_get_characters_for($cast_id)
 	);
-	// http://localhost/wpdocs/WordPress/_wp-includes---functions.php.html#functionwp_parse_args
+	$new = array(
+		'name' => $_POST['post_title'],
+		'characters' => $characters);
 	$merged = wp_parse_args($new, $defaults);
-	// Update cast_id first, since it impacts all other queries
-	if( array_key_exists($merged, 'cast_id') && $defaults['cast_id'] !== $merged['cast_id'] ){
-		$new_cast_id = $merged['cast_id'];
-		$new_name = get_post_field('post_title', $cast_id);
-		// Change cast_id, ie point this actor at a different WP post.
-		$wpdb->query($wpdb->prepare('UPDATE '.$fk_settings->cast2character_table.' AS cc, '.$fk_settings->character_table.' AS ch
-			SET cc.cast_id = %1$d, ch.cast_id = %1$d, cc.name = %2$s WHERE cc.cast_id = %3$d AND ch.cast_id = %3$d',
-			$new_cast_id, $new_name, $cast_id));
-		$cast_id = $new_cast_id;
-		unset($merged['cast_id']);
-	}
 
 	foreach( $merged as $field => $value ){
 		if( $defaults[$field] === $value ){
 			// Don't do anything if value hasn't changed.
 			continue;
 		}
-		if( $field === 'characters' ){
+		switch($field){
+		case 'characters':
 			// Delete characters that are only in $defaults
 			$to_delete = array_diff($defaults['characters'], $value);
 			$to_delete = implode(',', $to_delete);
@@ -75,6 +67,11 @@ function fk_cast_edit($cast_id, $new){
 			// delete by setting cast to 0 - FIXME
 			$wpdb->query($wpdb->prepare("UPDATE $fk_settings->cast2character_table SET cast_id = 0 WHERE cast_id = $cast_id AND character_id IN %s",
 				$to_delete));
+			break;
+		case 'name':
+			$wpdb->query($wpdb->prepare("UPDATE $fk_settings->cast_table SET name = %s WHERE cast_id = %d",
+				$value, $cast_id));
+			break;
 		}
 	}
 }
@@ -95,6 +92,12 @@ function fk_cast_delete($cast_id, $delete_characters = false){
 			INNER JOIN app $fk_settings->cast2character_table AS cc
 			WHERE app.cast_id = %d AND app.character_id =  cc.character_id", $cast_id));
 	}
+}
+
+function fk_cast_exists($cast_id){
+	global $wpdb, $fk_settings;
+	$does_exist = (null !== $wpdb->get_row($wpdb->prepare("SELECT cast_id FROM $fk_settings->cast_table WHERE cast_id = %d", $cast_id)) );
+	return $does_exist;
 }
 
 /**
