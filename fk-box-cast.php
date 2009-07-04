@@ -70,6 +70,10 @@ function fk_box_cb_link_cast_to_character(){
 function fk_save_post_cast($post_id){
 	check_admin_referer('fk_set_character_name', 'fk_set_character_name_nonce');
 	$characters = $_POST['fk_characters']; // array(32, 9, 10)
+	if( ! is_array($characters) ){
+		// Prevent array_diff etc. from choking in fk_cast_edit()
+		$characters = array();
+	}
 	if( fk_cast_exists($post_id) ){
 		fk_cast_edit($post_id, $characters);
 	} else {

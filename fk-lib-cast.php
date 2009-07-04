@@ -39,27 +39,27 @@ function fk_cast_add($cast_id, $characters=array()){
  */
 function fk_cast_edit($cast_id, $characters){
 	global $wpdb, $fk_settings;
-	$defaults = array(
+	$old = array(
 		'name' => get_the_title($cast_id),
 		'characters' => fk_cast_get_characters_for($cast_id)
 	);
 	$new = array(
 		'name' => $_POST['post_title'],
 		'characters' => $characters);
-	$merged = wp_parse_args($new, $defaults);
+	$merged = wp_parse_args($new, $old);
 
 	foreach( $merged as $field => $value ){
-		if( $defaults[$field] === $value ){
+		if( $old[$field] === $value ){
 			// Don't do anything if value hasn't changed.
 			continue;
 		}
 		switch($field){
 		case 'characters':
-			// Delete characters that are only in $defaults
-			$to_delete = array_diff($defaults['characters'], $value);
+			// Delete characters that are only in $old
+			$to_delete = array_diff($old['characters'], $value);
 			$to_delete = implode(',', $to_delete);
 			// Add characters that are only in $value
-			$to_add = array_diff($value, $defaults['characters']);
+			$to_add = array_diff($value, $old['characters']);
 			$to_add = implode(',', $to_add);
 			// add
 			$wpdb->query($wpdb->prepare("UPDATE $fk_settings->cast2character_table SET cast_id = %d WHERE cast_id = $cast_id AND character_id IN %s",
