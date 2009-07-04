@@ -59,8 +59,8 @@ function fk_box_cb_link_cast_to_character(){
 				$selected, $id, $css_id);
 			printf('<label for="%s">%s</label>',
 				$css_id, $name);
-			printf('<a href="%s">'.__('view').'</a> '.__('or').
-			       '<a href="%s">'.__('edit').'</a>)<br />',
+			printf(' (<a href="%s">'.__('view').'</a> '.__('or').
+			       ' <a href="%s">'.__('edit').'</a>)<br />',
 				get_permalink($id), get_edit_post_link($id));
 		}
 		echo '</p>';
