@@ -38,6 +38,9 @@ require_once('fk-lib.php');
 require_once('fk-settings.php');
 // Theme functions
 require_once('fk-theme.php');
+// Template tags
+require_once('fk-template-tags.php');
+
 
 if( is_admin() ){
 	require_once('fk-error.php');
