@@ -42,6 +42,8 @@ if( is_admin() ){
 	require_once('fk-install.php');
 	// Set up menu, scripts, css.
 	require_once('fk-admin-menu.php');
+	// Callbacks for scripts
+	require_once('fk-callbacks.php');
 	if( $fk_settings->on_page_page ){
 		// fk-boxes.php loads each type's box file as well
 		require_once('fk-boxes.php'); // Add extra data to the page

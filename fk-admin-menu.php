@@ -32,8 +32,11 @@ function fk_admin_scripts(){
 		wp_localize_script('fk-quote-editor', 'fkQuoteVars', array(
 			'season' => $season,
 			'ep_num' => $ep_num,
-			'callback' => bloginfo('wpurl') . '/wp-admin/admin-ajax.php'));
-		wp_enqueue_script('fk-quote-editor');
+			'callback-get' => get_bloginfo('wpurl') . '/wp-admin/admin-ajax.php',
+			'callback-post' => get_bloginfo('wpurl') . '/wp-admin/admin-post.php'));
+			wp_enqueue_script('fk-quote-editor');
+			add_action('wp_ajax_get_all_quotes', 'fk_cb_get_all_quotes');
+			add_action('admin_post_add_remove_quote', 'fk_cb_add_remove_quote');
 	} elseif( $fk_settings->type === 'character' ){
 		wp_enqueue_script('fk-mark-appearances');
 	}

@@ -3,9 +3,8 @@
  * Author: Gabe Berke-Williams, 2007
  */
 
-// TODO: fix the callback 
 jQuery(document).ready(
-    var qe = new QuoteEditor(fkQuoteVars.season, fkQuoteVars.ep_num, fkQuoteVars.callback);
+    var qe = new QuoteEditor(fkQuoteVars.season, fkQuoteVars.ep_num, fkQuoteVars.callback-get, fkQuoteVars.callback-post);
     // ENGAGE
     qe.startEditing();
 });
@@ -15,15 +14,13 @@ jQuery(document).ready(
  * Constructor function. Sets variables.
  * @constructor
  */
-function QuoteEditor(season, ep_num, callback){
+function QuoteEditor(season, ep_num, callback-get, callback-post){
     /** @type integer */
     this.season = season;
     /** @type integer */
     this.ep_num = ep_num;
-    /**
-     * The location of the callback directory.
-     */
-    this.callback = callback;
+    this.callback-get = callback-get;
+    this.callback-post = callback-post;
     /**
      * The element that contains status messages.
      * @type jQuery object
@@ -34,7 +31,7 @@ function QuoteEditor(season, ep_num, callback){
      * @type jQuery object
      */
     this.undoElem = jQuery('#undo');
-    if( ! (season && ep_num && callback && this.statusElem.length==1 && this.undoElem.length==1) ){
+    if( ! (season && ep_num && callback-get && callback-post && this.statusElem.length==1 && this.undoElem.length==1) ){
 	// ERR
 	alert('uh-oh');
 	return false;
@@ -130,9 +127,10 @@ QuoteEditor.prototype.startEditing = function(){
     // Show style but don't let people do anything until Ajax request is successful.
     this.deselect(jQuery('.line')); // Set lines to their base state.
     jQuery.ajax({
-	url: that.callback + 'cb_get_all_quotes.php',
+	url: that.callback-get,
 	type: 'GET',
-	data: {season: that.season, ep_num: that.ep_num},
+	// action parameter is for WP
+	data: {action: 'get_all_quotes', season: that.season, ep_num: that.ep_num},
 	dataType: 'json',
 	success: function(data, textStatus){
 	    that.anchorToLineIds = data;
@@ -343,9 +341,11 @@ QuoteEditor.prototype.send = function(){
     // Clear this.addlines because otherwise it gets more than 2 elements
     // and things get wonky.
     this.addLines = [];
+    // For WP
+    params['action'] = 'add_remove_quote';
     //paramStr = paramStr.join('&');
     jQuery.ajax({
-	url: that.callback + 'cb_quote.php',
+	url: that.callback-post,
 	type: 'POST',
 	data: params,
 	beforeSend: function(transport){
