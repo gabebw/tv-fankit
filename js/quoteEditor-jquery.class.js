@@ -33,7 +33,7 @@ function QuoteEditor(season, ep_num, callback_get, callback_post){
     this.undoElem = jQuery('#undo');
     if( ! (season && ep_num && callback_get && callback_post && this.statusElem.length==1 && this.undoElem.length==1) ){
 	// ERR
-	alert('uh-oh');
+	//alert('uh-oh');
 	return false;
     }
     /**
