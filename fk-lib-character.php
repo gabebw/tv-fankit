@@ -132,7 +132,7 @@ function fk_character_get_actor($character_id){
 		// Trying to get actor from an unsaved post.
 		return false;
 	}
-	$cast_id = (int)$wpdb->get_var($wpdb->prepare("SELECT cast_id FROM $fk_settings->cast2character_table WHERE character_id =%d",
+	$cast_id = $wpdb->get_var($wpdb->prepare("SELECT cast_id FROM $fk_settings->cast2character_table WHERE character_id =%d",
 		$character_id));
 	if( is_null($cast_id) ){
 		$cast_id = false;

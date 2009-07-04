@@ -116,7 +116,7 @@ function fk_box_cb_add_actor_for_character(){
 		_e("After you've added a cast member, you can come back here and mark which actor or actress plays this character.");
 	} else {
 		foreach( (array) $all_cast as $cm ){
-			$id = (int)$cm->cast_id;
+			$id = $cm->cast_id;
 			$css_id = "actor-$id"; // "actor-21"
 			$checked = ($played_by === $id) ? ' checked="checked"' : '';
 			echo "<label for=\"$css_id\">";
