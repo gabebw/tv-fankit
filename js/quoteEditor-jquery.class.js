@@ -3,8 +3,8 @@
  * Author: Gabe Berke-Williams, 2007
  */
 
-jQuery(document).ready(
-    var qe = new QuoteEditor(fkQuoteVars.season, fkQuoteVars.ep_num, fkQuoteVars.callback-get, fkQuoteVars.callback-post);
+jQuery(document).ready(function(){
+    var qe = new QuoteEditor(fkQuoteVars.season, fkQuoteVars.ep_num, fkQuoteVars.callback_get, fkQuoteVars.callback_post);
     // ENGAGE
     qe.startEditing();
 });
@@ -14,13 +14,13 @@ jQuery(document).ready(
  * Constructor function. Sets variables.
  * @constructor
  */
-function QuoteEditor(season, ep_num, callback-get, callback-post){
+function QuoteEditor(season, ep_num, callback_get, callback_post){
     /** @type integer */
     this.season = season;
     /** @type integer */
     this.ep_num = ep_num;
-    this.callback-get = callback-get;
-    this.callback-post = callback-post;
+    this.callback_get = callback_get;
+    this.callback_post = callback_post;
     /**
      * The element that contains status messages.
      * @type jQuery object
@@ -31,7 +31,7 @@ function QuoteEditor(season, ep_num, callback-get, callback-post){
      * @type jQuery object
      */
     this.undoElem = jQuery('#undo');
-    if( ! (season && ep_num && callback-get && callback-post && this.statusElem.length==1 && this.undoElem.length==1) ){
+    if( ! (season && ep_num && callback_get && callback_post && this.statusElem.length==1 && this.undoElem.length==1) ){
 	// ERR
 	alert('uh-oh');
 	return false;
@@ -127,7 +127,7 @@ QuoteEditor.prototype.startEditing = function(){
     // Show style but don't let people do anything until Ajax request is successful.
     this.deselect(jQuery('.line')); // Set lines to their base state.
     jQuery.ajax({
-	url: that.callback-get,
+	url: that.callback_get,
 	type: 'GET',
 	// action parameter is for WP
 	data: {action: 'get_all_quotes', season: that.season, ep_num: that.ep_num},
@@ -345,7 +345,7 @@ QuoteEditor.prototype.send = function(){
     params['action'] = 'add_remove_quote';
     //paramStr = paramStr.join('&');
     jQuery.ajax({
-	url: that.callback-post,
+	url: that.callback_post,
 	type: 'POST',
 	data: params,
 	beforeSend: function(transport){
