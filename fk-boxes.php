@@ -8,14 +8,6 @@ require_once('fk-box-cast.php');
 require_once('fk-box-character.php');
 require_once('fk-box-episode.php');
 add_action('init', 'fk_boxes_init');
-//add_filter('wp_redirect', 'myloc');
-//$fke = new WP_Error();
-//$fke->add('foo', 'bar');
-function myloc($location){
-	//global $fke;
-	$newloc = add_query_arg('blah', 'foobar', $location);
-	return $newloc;
-}
 
 /**
  * Add global metaboxe - eg metaboxes that appear for every page.
