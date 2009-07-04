@@ -27,6 +27,12 @@ function fk_admin_scripts(){
 	wp_enqueue_script('jquery-ui-accordion');
 	// TODO:JS
 	if( $fk_settings->type === 'episode' ){
+		global $post;
+		list($season, $ep_num) = fk_episode_get_season_ep_num($post->ID);
+		wp_localize_script('fk-quote-editor', 'fkQuoteVars', array(
+			'season' => $season,
+			'ep_num' => $ep_num,
+			'callback' => bloginfo('wpurl') . '/wp-admin/admin-ajax.php'));
 		wp_enqueue_script('fk-quote-editor');
 	} elseif( $fk_settings->type === 'character' ){
 		wp_enqueue_script('fk-mark-appearances');

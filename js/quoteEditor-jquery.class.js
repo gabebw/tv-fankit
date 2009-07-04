@@ -3,21 +3,19 @@
  * Author: Gabe Berke-Williams, 2007
  */
 
-/*
-window.domloadFuncs.push(function(){
-		// TODO: localize
-    var qe = new QuoteEditor(window.season, window.ep_num, window.cb_dir);
+// TODO: fix the callback 
+jQuery(document).ready(
+    var qe = new QuoteEditor(fkQuoteVars.season, fkQuoteVars.ep_num, fkQuoteVars.callback);
     // ENGAGE
     qe.startEditing();
 });
-*/
 
 // FIXME: fix flashback css so boxes still line up
 /**
  * Constructor function. Sets variables.
  * @constructor
  */
-function QuoteEditor(season, ep_num, cb_dir){
+function QuoteEditor(season, ep_num, callback){
     /** @type integer */
     this.season = season;
     /** @type integer */
@@ -25,7 +23,7 @@ function QuoteEditor(season, ep_num, cb_dir){
     /**
      * The location of the callback directory.
      */
-    this.cb_dir = 'callbacks/';
+    this.callback = callback;
     /**
      * The element that contains status messages.
      * @type jQuery object
@@ -36,7 +34,7 @@ function QuoteEditor(season, ep_num, cb_dir){
      * @type jQuery object
      */
     this.undoElem = jQuery('#undo');
-    if( ! (season && ep_num && cb_dir && this.statusElem.length==1 && this.undoElem.length==1) ){
+    if( ! (season && ep_num && callback && this.statusElem.length==1 && this.undoElem.length==1) ){
 	// ERR
 	alert('uh-oh');
 	return false;
@@ -132,7 +130,7 @@ QuoteEditor.prototype.startEditing = function(){
     // Show style but don't let people do anything until Ajax request is successful.
     this.deselect(jQuery('.line')); // Set lines to their base state.
     jQuery.ajax({
-	url: that.cb_dir + 'cb_get_all_quotes.php',
+	url: that.callback + 'cb_get_all_quotes.php',
 	type: 'GET',
 	data: {season: that.season, ep_num: that.ep_num},
 	dataType: 'json',
@@ -347,7 +345,7 @@ QuoteEditor.prototype.send = function(){
     this.addLines = [];
     //paramStr = paramStr.join('&');
     jQuery.ajax({
-	url: that.cb_dir + 'cb_quote.php',
+	url: that.callback + 'cb_quote.php',
 	type: 'POST',
 	data: params,
 	beforeSend: function(transport){
