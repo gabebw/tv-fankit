@@ -99,8 +99,8 @@ function fk_save_post($post_id){
 	}
 	// verify this came from the our screen and with proper authorization,
 	// because save_post can be triggered at other times
-	if( 'post' == $_POST['post_type'] ){
-		if ( !current_user_can( 'edit_post', $post_id ))
+	if( 'page' == $_POST['post_type'] ){
+		if ( !current_user_can( 'delete_page', $post_id ))
 			return $post_id;
 	} else {
 		if ( !current_user_can( 'edit_post', $post_id ))
@@ -140,11 +140,7 @@ function fk_save_post($post_id){
 
 function fk_delete_post($post_id){
 	global $fk_settings;
-	// $old_fk_type is set to "none" for posts where it wasn't explicitly set, eg posts written before this plugin was activated
-	$old_fk_type = $_POST['fk_old_type'];
-	// Figure out which type of data we're dealing with.
-	$new_fk_type = $_POST['fk_type'];
-	if($old_fk_type === 'none' ){
+	if($fk_settings->type === 'none' ){
 		return;
 	}
 

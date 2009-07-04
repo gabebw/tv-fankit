@@ -68,9 +68,6 @@ function fk_box_cb_link_cast_to_character(){
 }
 
 function fk_save_post_cast($post_id){
-	if( $_POST['action'] === 'inline-save' ){
-		return;
-	}
 	check_admin_referer('fk_set_character_name', 'fk_set_character_name_nonce');
 	$characters = $_POST['fk_characters']; // array(32, 9, 10)
 	if( fk_cast_exists($post_id) ){

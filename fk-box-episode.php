@@ -113,12 +113,6 @@ function fk_episode_transcript_box_cb(){
 }
 
 function fk_save_post_episode($post_id){
-	if( $_POST['action'] === 'inline-save' ){
-		// TODO: episodes actually do parse post content, so somehow check if transcript has changed, and if it has
-		// do stuff - wp supplies the nonce
-		// - maybe use revisions, if they're enabled. Because they can be turned off - see page on editing wp-config.php
-		return;
-	}
 	check_admin_referer('fk_set_characters', 'fk_characters_nonce');
 	check_admin_referer('fk_set_episode_info', 'fk_episode_info_nonce');
 	check_admin_referer('fk_set_episode_transcript', 'fk_episode_transcript_nonce');

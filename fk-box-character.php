@@ -132,9 +132,6 @@ function fk_box_cb_add_actor_for_character(){
 }
 
 function fk_save_post_character($post_id){
-	if( $_POST['action'] === 'inline-save' ){
-		return;
-	}
 	check_admin_referer('fk_character_appearance', 'fk_character_appearance_nonce');
 
 	$cast = $_POST['fk_cast'];
