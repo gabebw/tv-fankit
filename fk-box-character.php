@@ -1,6 +1,6 @@
 <?php
 /**
- * Add metaboxes for an character post.
+ * Add metaboxes for a character post.
  * @package FanKit
  */
 
@@ -57,6 +57,7 @@ function fk_box_cb_character_appearances(){
 	wp_nonce_field('fk_character_appearance', 'fk_character_appearance_nonce');
 
 	$all_episodes = fk_episode_get_all();
+	echo '<p>' . __('If an episode is not listed, you can <a href="'.$fk_settings->new_episode_link.'">add it</a> then come back to this post.') . '</p>';
 	echo '<p>';
 	if( empty($all_episodes) ){
 		printf(__('No episodes have been added. Maybe you want to <a href="%s">add one</a>?'),
@@ -107,6 +108,7 @@ function fk_box_cb_add_actor_for_character(){
 	}
 
 	echo '<p>';
+	echo '<p>' . __('If an actor or actress is not listed, you can <a href="'.$fk_settings->new_cast_link.'">add it</a> then come back to this post.') . '</p>';
 	if( empty($all_cast) ){
 		printf(__('No actors or actresses have been added. Maybe you want to <a href="%s">add one</a>?'),
 			$fk_settings->new_cast_link);
@@ -122,7 +124,7 @@ function fk_box_cb_add_actor_for_character(){
 				$css_id, $checked, $id);
 			printf('%s</label> (<a href="%s">'.__('view').'</a> '.
 				__('or') . ' <a href="%s">'.__('edit').'</a>)',
-				$cm->name, get_permalink($id), get_edit_post_link($ep->episode_id));
+				$cm->name, get_permalink($id), get_edit_post_link($id));
 			echo '<br />';
 		}
 	}

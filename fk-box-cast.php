@@ -37,7 +37,7 @@ function fk_box_cb_link_cast_to_character(){
 
 	// Use nonce for verification
 	wp_nonce_field('fk_set_character_name', 'fk_set_character_name_nonce');
-	echo '<p>' . __('Note: if a character is not listed, you can <a href="'.$fk_settings->new_character_link.'">add it</a> then come back to this post.') . '</p>';
+	echo '<p>' . __('If a character is not listed, you can <a href="'.$fk_settings->new_character_link.'">add it</a> then come back to this post.') . '</p>';
 	// FIXME: i think a table would work well - that way we only have to write the header text ("All" etc) once, plus probs easier to parse for user
 	echo '<p>';
 	if( empty($all_character_posts) ){
@@ -67,13 +67,17 @@ function fk_box_cb_link_cast_to_character(){
 	}
 }
 
-function fk_save_post_cast($page_id){
+function fk_save_post_cast($post_id){
 	if( $_POST['action'] === 'inline-save' ){
 		return;
 	}
 	check_admin_referer('fk_set_character_name', 'fk_set_character_name_nonce');
 	$characters = $_POST['fk_characters']; // array(32, 9, 10)
-	fk_cast_add($page_id, $characters);
+	if( fk_cast_exists($post_id) ){
+		fk_cast_edit($post_id, $characters);
+	} else {
+		fk_cast_add($post_id, $characters);
+	}
 }
 
 function fk_delete_post_cast($page_id){

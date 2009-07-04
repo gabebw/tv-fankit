@@ -81,6 +81,7 @@ function fk_episode_characters_box_cb(){
 		$characters = fk_episode_get_characters($post->ID);
 	}
 	$all_characters = fk_character_get_all(); // sorted by first name
+	echo '<p>' . __('If a character is not listed, you can <a href="'.$fk_settings->new_character_link.'">add it</a> then come back to this post.') . '</p>';
 	if( empty($characters) ){
 		_e("<p>No characters have been marked as appearing in this episode.</p>");
 	}
