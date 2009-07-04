@@ -111,12 +111,11 @@ function fk_character_edit($character_id, $new_cast, $new_appearances){
 /**
  * Get list of episodes that character appeared in.
  * @param int $character_id The character_id corresponding to the character to search the DB for.
- * @returns array An array of episode_id's. If character does not appear in any episodes, returns empty array.
- * @todo Is array("2x1", "2x2") better?)
+ * @returns array An array of episode_id's, sorted by season and ep_num. If character does not appear in any episodes, returns empty array.
  */
 function fk_character_get_appearances($character_id){
 	global $wpdb, $fk_settings;
-	$appearances = $wpdb->get_col($wpdb->prepare("SELECT episode_id FROM $fk_settings->appearance_table WHERE character_id = %d",
+	$appearances = $wpdb->get_col($wpdb->prepare("SELECT ep.episode_id FROM $fk_settings->episode_table AS ep INNER JOIN $fk_settings->appearance_table AS app ON ep.episode_id = app.episode_id AND app.character_id = %d ORDER BY ep.season, ep.ep_num ASC",
 		$character_id));
 	return $appearances;
 }
