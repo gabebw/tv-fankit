@@ -4,6 +4,10 @@
  * @package FanKit
  */
 
+// Quote callbacks
+add_action('wp_ajax_get_all_quotes', 'fk_cb_get_all_quotes');
+add_action('admin_post_add_remove_quote', 'fk_cb_add_remove_quote');
+
 add_action('admin_menu', 'fk_generate_menu');
 // admin_head is the earliest action where $title is set
 add_action('admin_head', 'fk_change_title');
@@ -33,8 +37,6 @@ function fk_admin_scripts(){
 			'callback_get' => get_bloginfo('wpurl') . '/wp-admin/admin-ajax.php',
 			'callback_post' => get_bloginfo('wpurl') . '/wp-admin/admin-post.php'));
 			wp_enqueue_script('fk-quote-editor');
-			add_action('wp_ajax_get_all_quotes', 'fk_cb_get_all_quotes');
-			add_action('admin_post_add_remove_quote', 'fk_cb_add_remove_quote');
 	} elseif( $fk_settings->type === 'character' ){
 		wp_enqueue_script('fk-mark-appearances');
 	}
