@@ -89,8 +89,8 @@ function fk_cast_delete($cast_id, $delete_characters = false){
 		// TODO: does this work?
 		// Delete all characters from episodes where they were played by this actor (other actors may have played them in other episodes).
 		$wpdb->query($wpdb->prepare("DELETE app FROM $fk_settings->appearance_table AS app
-			INNER JOIN app $fk_settings->cast2character_table AS cc
-			WHERE app.cast_id = %d AND app.character_id =  cc.character_id", $cast_id));
+			INNER JOIN $fk_settings->cast2character_table AS cc
+			ON app.cast_id = %d AND app.character_id = cc.character_id", $cast_id));
 	}
 }
 
