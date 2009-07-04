@@ -1,7 +1,9 @@
 <?php
 // Template tags! Yay!
 
+/*************************/
 /**** CHARACTER TAGS  ****/
+/*************************/
 /**
  * Shows list of episodes this character has appeared in
  */
@@ -65,8 +67,48 @@ function get_the_actor($character_id = 0){
 	return $actor;
 }
 
+/********************/
+/**** CAST TAGS  ****/
+/********************/
+/**
+ * Return the characters played by cast member.
+ * Pretty formatted according to how many characters the cast member plays.
+ * 1 character:
+ * "CastMember plays <a href="permalink">Character</a>"
+ * so if there's >1 character:
+ * "CastMember plays the following characters:
+ * <ul>
+ * <li><a href="permalink_1">Character_1</a></li>
+ * <li><a href="permalink_2">Character_2</a></li>
+ * </ul>
+ */
+function get_the_cast_characters(){
+	$characters = fk_cast_get_characters_for(get_the_ID());
+	$ret_str = '';
+	if( empty($characters) ){
+		$ret_str = "This cast member does not play any characters.";
+	} elseif( count($characters) === 1 ){
+		$ch_id = $characters[0];
+		$ret_str = sprintf('%s plays <a href="%s">%s</a>.',
+			get_the_title(), get_permalink($ch_id), get_the_title($ch_id));
 
+	} elseif( count($characters) > 1 ){
+		$ret_str = get_the_title() . ' plays the following characters:';
+		$ret_str .= '<ul>';
+		foreach($characters as $chid){
+			$ret_str .= '<li>';
+			$ret_str .= sprintf('<a href="%s">%s</a>',
+				get_permalink($chid), get_the_title($chid));
+			$ret_str .= '</li>';
+		}
+		$ret_str .= '</ul>';
+	}
+	return $ret_str;
+}
+
+/***********************/
 /**** EPISODE TAGS  ****/
+/***********************/
 /**
  * Prints the season and episode number
  */
