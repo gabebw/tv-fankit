@@ -92,8 +92,6 @@ function fk_episode_characters_box_cb(){
 		echo '<p>';
 		foreach( (array) $all_characters as $ch ){
 			$ch_id = $ch->character_id;
-			// FIXME - characters by letter
-			$current_letter = '';
 			$checked = fk_character_appears_in($ch_id, $post->ID) ? ' checked="checked"' : '';
 			printf('<label><input type="checkbox" name="fk_characters[]" value="%1$s"%2$s /> %3$s</label>',
 				$ch_id, $checked, $ch->name);
@@ -120,10 +118,6 @@ function fk_save_post_episode($post_id){
 	$season = $_POST['fk_season'];
 	$ep_num = $_POST['fk_ep_num'];
 	$characters = $_POST['fk_characters']; // TODO
-	if( preg_match('/[^0-9]/', $season . $ep_num) ){
-		// User entered non-numeric string for one of the vars. Break.
-		return $post_id;
-	}
 	if( is_null($characters) ){
 		$characters = array();
 	}

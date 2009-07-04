@@ -14,6 +14,13 @@
  */
 function fk_episode_add($episode_id, $season, $ep_num, $characters){
 	global $wpdb, $fk_settings;
+	// $wpdb->prepare casts non-numerics to 0 with %d, but be safe.
+	if( ! is_numeric($season) ){
+		$season = 0;
+	}
+	if( ! is_numeric($ep_num) ){
+		$ep_num = 0;
+	}
 	// Check for nulls because when passed from POST data we don't actually check for sanity before passing in here.
 	// $success is false or an int (number of rows affected)
 	$success = $wpdb->query($wpdb->prepare("INSERT INTO $fk_settings->episode_table
@@ -21,7 +28,7 @@ function fk_episode_add($episode_id, $season, $ep_num, $characters){
 		VALUES ( %d, %d, %d )",
 			$episode_id, $season, $ep_num));
 	if( $success === false ){
-		return new WP_Error('query_failed', 'Failed to add episode');
+		return new WP_Error('query_failed', 'Failed to add episode.');
 	} else {
 		// Now that the episode exists, add the characters
 		foreach( (array) $characters as $character){
@@ -37,7 +44,7 @@ function fk_episode_add($episode_id, $season, $ep_num, $characters){
  * @param int $new_season The new season
  * @param int $new_ep_num The new episode number
  * @param array $new_characters The new array of characters that appear in the episode (this is an array of post ids)
- * @return bool|WP_Error True if episode updated or created successfully, WP_Error otherwise
+ * @return true|WP_Error True if episode updated or created successfully, WP_Error otherwise
  */
 function fk_episode_edit($episode_id, $new_season, $new_ep_num, $new_characters){
 	global $wpdb, $fk_settings;
@@ -59,7 +66,6 @@ function fk_episode_edit($episode_id, $new_season, $new_ep_num, $new_characters)
 		switch($key){
 		case 'season':
 			if( '' !== $new_value && ! is_numeric($new_value) ){
-				var_dump($new_value);
 				// must be a number or a blank string
 				return new WP_Error('bad_season', "Episode's season must be a number.");
 			} else {
@@ -86,14 +92,22 @@ function fk_episode_edit($episode_id, $new_season, $new_ep_num, $new_characters)
 			break;
 		}
 	}
+	return true;
 }
 
+/**
+ * See if episode exists. Basically checks if post exists as an episode.
+ * @return bool
+ */
 function fk_episode_exists($episode_id){
 	global $wpdb, $fk_settings;
 	$does_exist = (null !== $wpdb->get_row($wpdb->prepare("SELECT episode_id FROM $fk_settings->episode_table WHERE episode_id = %d", $episode_id)) );
 	return $does_exist;
 }
 
+/**
+ * Given season and ep_num, get post ID of an episode.
+ */
 function fk_episode_get_id($season, $ep_num){
 	global $wpdb, $fk_settings;
 	$id = $wpdb->get_var($wpdb->prepare("SELECT episode_id FROM $fk_settings->episode_table WHERE season = %d AND ep_num = %d",
@@ -101,6 +115,9 @@ function fk_episode_get_id($season, $ep_num){
 	return $id;
 }
 
+/**
+ * Deletes an episode and deletes appearances by characters.
+ */
 function fk_episode_delete($episode_id){
 	global $wpdb, $fk_settings;
 	// Delete episode - also deletes appearances by characters.
@@ -130,6 +147,11 @@ function fk_episode_get_season_ep_num($episode_id){
 	return $season_ep_num_array;
 }
 
+/**
+ * Get an array of character post ID's for an episode. Note that characters
+ * are unsorted.
+ * @return Array of character IDs.
+ */
 function fk_episode_get_characters($episode_id){
 	global $wpdb, $fk_settings;
 	$characters = $wpdb->get_col(
