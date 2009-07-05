@@ -117,11 +117,8 @@ function the_season_ep_num(){
 }
 
 function get_the_season_ep_num(){
-	$str = '<p>';
 	list($season, $ep_num) = fk_episode_get_season_ep_num(get_the_ID());
-	$str .= "Season: $season<br />";
-	$str .= "Episode Number: $ep_num";
-	$str .= '</p>';
+	$str = "{$season}x{$ep_num}";
 	return $str;
 }
 
@@ -134,7 +131,7 @@ function the_episode_characters(){
 
 function get_the_episode_characters(){
 	$characters = fk_episode_get_characters(get_the_ID());
-	$ch_str = 'The following characters appear in this episode:<br />';
+	$ch_str = '<p>The following characters appear in this episode:<br />';
 	$ch_str .= '<ul>';
 	foreach($characters as $ch_id){
 		$actor_id = fk_character_get_actor($ch_id);
@@ -148,5 +145,6 @@ function get_the_episode_characters(){
 			get_permalink($ch_id), get_the_title($ch_id), $played_by);
 	}
 	$ch_str .= '</ul>';
+	$ch_str .= '</p>';
 	return $ch_str;
 }
