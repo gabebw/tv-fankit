@@ -36,7 +36,7 @@ function fk_admin_scripts(){
 			'ep_num' => $ep_num,
 			'callback_get' => get_bloginfo('wpurl') . '/wp-admin/admin-ajax.php',
 			'callback_post' => get_bloginfo('wpurl') . '/wp-admin/admin-post.php'));
-			wp_enqueue_script('fk-quote-editor');
+		wp_enqueue_script('fk-quote-editor');
 	} elseif( $fk_settings->type === 'character' ){
 		wp_enqueue_script('fk-mark-appearances');
 	}
@@ -49,12 +49,10 @@ function fk_admin_css(){
 
 function fk_admin_register_scripts(){
 	global $fk_plugin_url;
-	wp_register_script('jquery-1.3', $fk_plugin_url . 'js/jquery-1.3.2.minified.js', array(), '1.3.2');
-	wp_register_script('jquery-ui-core-1.7', $fk_plugin_url . 'js/ui/jquery-ui-1.7-core.minified.js', array('jquery-1.3'), '1.7');
-	wp_register_script('jquery-ui-accordion', $fk_plugin_url . 'js/ui/jquery-ui-accordion.js', array('jquery-ui-core'), '1.5.3');
-	wp_register_script('bgiframe', $fk_plugin_url . 'js/bgiframe/bgiframe.minified.js', array('jquery'), '2.1.1');
-	// Script to list episodes so user can mark appearances of a character. Requires "interface" for accordion effect.
-	wp_register_script('fk-mark-appearances', $fk_plugin_url . 'js/fk-mark-appearances.js', array('interface', 'jquery-suggest'), '1');
+	// Script to list episodes so user can mark appearances of a character. 
+	// Requires "interface" for accordion effect.
+	// "suggest" is jquery suggest
+	wp_register_script('fk-mark-appearances', $fk_plugin_url . 'js/fk-mark-appearances.js', array('interface', 'suggest'), '1'); 
 	// will this fail hard when used with 1.2.6?
 	wp_register_script('fk-quote-editor', $fk_plugin_url . 'js/quoteEditor-jquery.class.js', array('jquery', 'jquery-color'), '1.0');
 }
