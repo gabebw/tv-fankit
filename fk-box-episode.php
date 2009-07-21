@@ -28,7 +28,7 @@ function fk_add_episode_boxes(){
  */
 function fk_episode_notices(){
 	global $post;
-	$new_ep_txt = '';
+	$pre_ep_txt = '';
 	if( 0 === $post->ID ){
 		$pre_ep_txt = __('You are adding a new episode.');
 	} else {
