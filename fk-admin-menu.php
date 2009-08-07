@@ -49,6 +49,7 @@ function fk_admin_css(){
 
 function fk_admin_register_scripts(){
 	global $fk_plugin_url;
+	// TODO: register "jquery-ui-dialog"?
 	// Script to list episodes so user can mark appearances of a character. 
 	// Requires "interface" for accordion effect.
 	// "suggest" is jquery suggest
@@ -83,7 +84,7 @@ function fk_change_title(){
 	} else {
 		$prefix = _c('Add New|post');
 	}
-	$title = "$prefix " . $fk_settings->get_pretty_type($fk_settings->type);
+	$title = $prefix . ' ' . $fk_settings->get_pretty_type();
 }
 
 /**
