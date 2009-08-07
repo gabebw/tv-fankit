@@ -48,6 +48,12 @@ class FK_settings {
 	var $plugin_path;
 
 	/**
+	 * @var string The current post type, like "None", "Character", etc.
+	 */
+	var $type;
+
+	/**
+	 * TODO: this should be private
 	 * @var array A nice way to print out the types so users understand them.
 	 * @example Use like $fk_settings->pretty_type['episode']
 	 */
@@ -73,7 +79,8 @@ class FK_settings {
 	 */
 	var $on_page_page;
 
-	// Link to add a new <foobar>. Not absolute.
+	// Links to add a new {cast,character,episode}.
+	// Not absolute: 'post-new.php?fk_type=cast'
 	var $new_cast_link;
 	var $new_character_link;
 	var $new_episode_link;
@@ -84,15 +91,15 @@ class FK_settings {
 	function FK_settings(){
 		global $wpdb, $pagenow;
 		$this->prefix = $wpdb->prefix . 'fk_';
-		$this->cast_table = $this->prefix . 'cast';
-		$this->character_table = $this->prefix . 'character';
-		$this->episode_table = $this->prefix . 'episode';
-		$this->appearance_table = $this->prefix . 'appearances';
+		$this->cast_table =           $this->prefix . 'cast';
+		$this->character_table =      $this->prefix . 'character';
+		$this->episode_table =        $this->prefix . 'episode';
+		$this->appearance_table =     $this->prefix . 'appearances';
 		$this->cast2character_table = $this->prefix . 'cast2character';
 
 		$this->db_version = 0.6;
 		$this->plugin_path =  trailingslashit( dirname(plugin_basename(__FILE__)) );
-		// types are displayed in the menu metabox in order of $valid_types
+		// types are displayed in the menu metabox in this order
 		$this->valid_types = array('cast', 'character', 'episode', 'none');
 		$this->type = $this->get_current_type();
 		$this->pretty_type = array('episode' => __('Episode'),
@@ -133,7 +140,10 @@ class FK_settings {
 	 * @param string $type
 	 * @return string
 	 */
-	function get_pretty_type($type){
+	function get_pretty_type($type=false){
+		if( $type === false ){
+			$type = $this->get_current_type();
+		}
 		if( ! $this->is_valid_type($type) ){
 			$type = 'none';
 		}
