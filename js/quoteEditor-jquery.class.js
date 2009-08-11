@@ -111,7 +111,6 @@ function QuoteEditor(season, ep_num, callback_get, callback_post){
  * sortId sorts an array of ids like ["l41", "l40"] => ["l40", "l41"].
  */
 QuoteEditor.prototype.sortId = function(arr){
-    return arr.sort(function(x,y){ return parseInt(x.slice(1)) - parseInt(y.slice(1));});
 };
 
 /**
@@ -511,12 +510,20 @@ QuoteEditor.prototype.deselect = function(lines){
  * $(<#l8>, <#l9>, <#l10>, <#l11>, <#l12>)
  */
 QuoteEditor.prototype.makeTween = function(idOne, idTwo){
+    var start,
+	end;
+    // "l60" -> 60
+    idOne = parseInt(idOne.slice(1));
+    idTwo = parseInt(idTwo.slice(1));
     if(idOne === idTwo){
 	return jQuery('#'+idOne);
+    }else if(idOne < idTwo) {
+	start = idOne;
+	end = idTwo;
+    } else if(idOne > idTwo ){
+	start = idTwo;
+	end = idOne;
     }
-    var sorted = this.sortId([idOne, idTwo]),
-	start = sorted[0].slice(1),
-	end = sorted[1].slice(1);
     // Minor optimization(?) - use :lt to whittle down
     // how many lines we select.
     // :lt(60) gives div.line from #l1 to #l60,
