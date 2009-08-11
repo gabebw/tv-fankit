@@ -31,7 +31,12 @@ function QuoteEditor(season, ep_num, callback_get, callback_post){
      * @type jQuery object
      */
     this.undoElem = jQuery('#undo');
-    if( ! (season && ep_num && callback_get && callback_post && this.statusElem.length==1 && this.undoElem.length==1) ){
+    if( ! (season &&
+	   ep_num &&
+	   callback_get &&
+	   callback_post &&
+	   this.statusElem.length==1 &&
+	   this.undoElem.length==1) ){
 	// ERR
 	//alert('uh-oh');
 	return false;
@@ -103,23 +108,24 @@ function QuoteEditor(season, ep_num, callback_get, callback_post){
 }
 
 /**
- * A function to pass to array.sort()
- * to sort an array of ids like ["l40", "l41"].
+ * sortId sorts an array of ids like ["l41", "l40"] => ["l40", "l41"].
  */
 QuoteEditor.prototype.sortId = function(arr){
     return arr.sort(function(x,y){ return parseInt(x.slice(1)) - parseInt(y.slice(1));});
-}
+};
+
 /**
- * A function to pass to array.sort()
- * to sort an array of elements like ["l40", "l41"].
+ * sortById sorts an array of elements by their ID,
+ * e.g. [<div#l41>, <div#l39>, <div#l41>]
+ * => [<div#l39>, <div#l40>, <div#l41>]
  */
 QuoteEditor.prototype.sortById = function(arr){
     return arr.sort(function(x,y){ return parseInt(x.id.slice(1)) - parseInt(y.id.slice(1));});
-}
+};
 
 /**
  * Gets quote lines and their anchors from PHP, sets style on quotes,
- * and triggers setup_events.
+ * and triggers setupEvents.
  * @function
  */
 QuoteEditor.prototype.startEditing = function(){
@@ -138,17 +144,19 @@ QuoteEditor.prototype.startEditing = function(){
 	    for(var a in that.anchorToLineIds){
 		anchors.push(a);
 	    }
-	    that.highestAnchor = parseInt( anchors[anchors.length-1].slice(1) ); // PHP sorts it for us
+	    // PHP sorts the anchors for us
+	    that.highestAnchor = parseInt( anchors[anchors.length-1].slice(1) );
 	    jQuery.each(anchors, function(i, anchor){
 		var lines = that.getLineIds(anchor);
-		var start = lines[0], end = lines[1];
+		var start = lines[0],
+		    end = lines[1];
 		that.lineIdToAnchor[start] = anchor;
 		that.lineIdToAnchor[end] = anchor;
 		that.select('#'+start+',#'+end);
 		that.highlight( that.makeTween(start,end) );
 	    });
 	    // After highlighting/selecting, let users do stuff too.
-	    that.setup_events();
+	    that.setupEvents();
 	},
 	error: function(transport, textStatus, errorThrown){
 	    // FIXME - find a jQuery modalbox replacement?
@@ -161,14 +169,13 @@ QuoteEditor.prototype.startEditing = function(){
 
 /**
  * Adds event handlers.
- * Uses event delegation to determine
- * which line triggered a click event,
+ * Uses event delegation to determine which line triggered a click event,
  * so only one handler is set regardless of transcript size.
  * @function
  */
-QuoteEditor.prototype.setup_events = function(){
+QuoteEditor.prototype.setupEvents = function(){
     var that = this;
-    var clickFunc = function(e){
+    jQuery('#content').click(function(e){
 	e.preventDefault(); // don't follow cast links away from the page
 	// .closest() allows for clicking on e.g. a <span.internal> inside the <div.line>
 	var elem = jQuery(e.target).closest('div.line')[0];
@@ -190,8 +197,7 @@ QuoteEditor.prototype.setup_events = function(){
 		that.add(elem);
 	    }
 	}
-    };
-    jQuery('#content').click(clickFunc);
+    });
     this.undoElem.click(function(e){
 	e.preventDefault();
 	that.undo();
@@ -508,8 +514,9 @@ QuoteEditor.prototype.makeTween = function(idOne, idTwo){
     if(idOne === idTwo){
 	return jQuery('#'+idOne);
     }
-    var sorted = this.sortId([idOne, idTwo]);
-    var start = sorted[0].slice(1), end = sorted[1].slice(1);
+    var sorted = this.sortId([idOne, idTwo]),
+	start = sorted[0].slice(1),
+	end = sorted[1].slice(1);
     // Minor optimization(?) - use :lt to whittle down
     // how many lines we select.
     // :lt(60) gives div.line from #l1 to #l60,
