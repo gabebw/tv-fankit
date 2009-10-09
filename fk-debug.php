@@ -17,7 +17,7 @@ function fk_show_a(){
 	echo '</pre>';
 }
 
-function dpr($x){
+function dbg($x){
 	echo '<pre>';
 	print_r($x);
 	echo '</pre>';
