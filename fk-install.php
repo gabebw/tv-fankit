@@ -1,6 +1,7 @@
 <?php
 /**
  * Install/uninstall functions.
+ *
  * @package FanKit
  */
 
@@ -32,7 +33,6 @@ function fk_install(){
 }
 
 /**
- * @package FanKit
  * @todo
  * use register_deactivation_hook() to print a message about purging
  * all info - cannot be undone, etc.
